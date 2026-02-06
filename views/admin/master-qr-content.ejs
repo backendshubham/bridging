@@ -1,0 +1,50 @@
+<div class="master-qr">
+    <div class="card">
+        <div class="card-body" style="text-align: center; padding: 3rem;">
+            <h2 style="margin-bottom: 2rem;">Master QR Code</h2>
+            <p style="color: var(--gray-600); margin-bottom: 2rem;">Scan this QR code to access the complete gemstone catalog</p>
+            
+            <% if (typeof qrData !== 'undefined' && qrData) { %>
+                <div style="background: white; padding: 2rem; border-radius: var(--radius-xl); display: inline-block; box-shadow: var(--shadow-lg); margin-bottom: 2rem;">
+                    <img src="<%= qrData.dataURL %>" alt="Master QR Code" style="max-width: 400px; width: 100%;">
+                </div>
+                
+                <div style="background: var(--gray-50); padding: 1.5rem; border-radius: var(--radius-lg); margin-bottom: 2rem;">
+                    <p style="font-weight: 600; margin-bottom: 0.5rem;">QR Code URL:</p>
+                    <p style="color: var(--primary-600); word-break: break-all; font-family: monospace;"><%= qrData.url %></p>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <p style="color: var(--gray-600); margin-bottom: 1rem;">💡 <strong>Usage Instructions:</strong></p>
+                    <ul style="text-align: left; display: inline-block; color: var(--gray-700);">
+                        <li>Print this QR code and display it at your shop entrance</li>
+                        <li>Customers can scan it to view your complete gemstone catalog</li>
+                        <li>No login required - instant access for all visitors</li>
+                    </ul>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <button onclick="window.print()" class="btn btn-primary">Print QR Code</button>
+                    <a href="<%= qrData.dataURL %>" download="ratnaveda-master-qr.png" class="btn btn-secondary">Download Image</a>
+                </div>
+            <% } else { %>
+                <p style="color: var(--error);">Failed to generate QR code. Please try again.</p>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<style>
+@media print {
+    .admin-sidebar,
+    .admin-header,
+    .action-bar,
+    button {
+        display: none !important;
+    }
+    .card {
+        box-shadow: none !important;
+    }
+}
+</style>
+

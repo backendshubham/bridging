@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+    <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem;">
+        <div class="card" style="max-width: 500px; text-align: center;">
+            <div class="card-body" style="padding: 3rem;">
+                <div style="font-size: 4rem; margin-bottom: 1rem;">⚠️</div>
+                <h1><%= typeof title !== 'undefined' ? title : 'Error' %></h1>
+                <p style="color: var(--gray-600); margin-bottom: 2rem;"><%= typeof message !== 'undefined' ? message : 'An error occurred' %></p>
+                <a href="/admin/dashboard" class="btn btn-primary">Go to Dashboard</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

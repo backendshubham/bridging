@@ -1,0 +1,292 @@
+<!-- Hero Section -->
+<div class="contact-hero">
+    <div class="contact-hero-overlay"></div>
+    <div class="container">
+        <div class="contact-header">
+            <div class="contact-header-icon">
+                <i class="fas fa-gem"></i>
+            </div>
+            <h1>Get In Touch</h1>
+            <p>Experience the luxury of authentic gemstones. Visit our store or connect with us through any channel below.</p>
+            <div class="contact-header-decoration">
+                <span></span>
+                <i class="fas fa-star"></i>
+                <span></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section contact-section">
+    <div class="container">
+
+        <!-- Contact Information Grid -->
+        <div class="contact-cards-grid">
+            <div class="contact-card premium-card">
+                <div class="contact-card-bg"></div>
+                <div class="contact-icon-wrapper">
+                    <div class="contact-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="icon-pulse"></div>
+                </div>
+                <h3>Visit Our Store</h3>
+                <p><%= settings.shop_address || 'Address not available' %></p>
+                <div class="contact-card-action">
+                    <a href="#map-section" class="btn-contact">
+                        <span>View on Map</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="contact-card premium-card">
+                <div class="contact-card-bg"></div>
+                <div class="contact-icon-wrapper">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="icon-pulse"></div>
+                </div>
+                <h3>Call Us</h3>
+                <p>
+                    <% if (settings.contact_phone) { %>
+                        <a href="tel:<%= settings.contact_phone %>" class="contact-link"><%= settings.contact_phone %></a>
+                    <% } else { %>
+                        <span class="contact-placeholder">Phone number not available</span>
+                    <% } %>
+                </p>
+                <% if (settings.contact_phone) { %>
+                <div class="contact-card-action">
+                    <a href="tel:<%= settings.contact_phone %>" class="btn-contact">
+                        <span>Call Now</span>
+                        <i class="fas fa-phone"></i>
+                    </a>
+                </div>
+                <% } %>
+            </div>
+
+            <div class="contact-card premium-card">
+                <div class="contact-card-bg"></div>
+                <div class="contact-icon-wrapper">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="icon-pulse"></div>
+                </div>
+                <h3>Email Us</h3>
+                <p>
+                    <% if (settings.contact_email) { %>
+                        <a href="mailto:<%= settings.contact_email %>" class="contact-link"><%= settings.contact_email %></a>
+                    <% } else { %>
+                        <span class="contact-placeholder">Email not available</span>
+                    <% } %>
+                </p>
+                <% if (settings.contact_email) { %>
+                <div class="contact-card-action">
+                    <a href="mailto:<%= settings.contact_email %>" class="btn-contact">
+                        <span>Send Email</span>
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+                <% } %>
+            </div>
+
+            <div class="contact-card premium-card">
+                <div class="contact-card-bg"></div>
+                <div class="contact-icon-wrapper">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="icon-pulse"></div>
+                </div>
+                <h3>Business Hours</h3>
+                <p class="business-hours">
+                    <% if (settings.business_hours) { %>
+                        <%= settings.business_hours.replace(/\n/g, '<br>') %>
+                    <% } else { %>
+                        Monday - Saturday: 10:00 AM - 7:00 PM<br>
+                        Sunday: Closed
+                    <% } %>
+                </p>
+            </div>
+        </div>
+
+        <!-- Map Section -->
+        <div class="contact-map-wrapper" id="map-section">
+            <div class="section-title">
+                <h2>Find Us</h2>
+                <p>Visit our store location</p>
+            </div>
+            <div class="map-container-enhanced">
+                <div id="map"></div>
+                <div class="map-overlay-info-enhanced">
+                    <div class="map-overlay-content">
+                        <div class="map-overlay-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="map-overlay-text">
+                            <h4><%= settings.shop_name || 'RatnaVeda' %></h4>
+                            <p><%= settings.shop_address || 'Address not available' %></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Why Visit Us Section -->
+        <div class="contact-extra-enhanced">
+            <div class="section-title">
+                <h2>Why Visit Us?</h2>
+                <p>Experience the difference of authentic luxury</p>
+            </div>
+            <div class="contact-features-enhanced">
+                <div class="contact-feature-enhanced">
+                    <div class="feature-icon-wrapper">
+                        <i class="fas fa-gem"></i>
+                        <div class="feature-icon-glow"></div>
+                    </div>
+                    <h4>Authentic Gemstones</h4>
+                    <p>View our certified collection in person and feel the quality</p>
+                </div>
+                <div class="contact-feature-enhanced">
+                    <div class="feature-icon-wrapper">
+                        <i class="fas fa-user-tie"></i>
+                        <div class="feature-icon-glow"></div>
+                    </div>
+                    <h4>Expert Consultation</h4>
+                    <p>Get professional guidance from our gemstone experts</p>
+                </div>
+                <div class="contact-feature-enhanced">
+                    <div class="feature-icon-wrapper">
+                        <i class="fas fa-certificate"></i>
+                        <div class="feature-icon-glow"></div>
+                    </div>
+                    <h4>Certification</h4>
+                    <p>All gemstones come with proper certification and documentation</p>
+                </div>
+                <div class="contact-feature-enhanced">
+                    <div class="feature-icon-wrapper">
+                        <i class="fas fa-shield-alt"></i>
+                        <div class="feature-icon-glow"></div>
+                    </div>
+                    <h4>Trusted Quality</h4>
+                    <p>Years of expertise in authentic gemstone trading</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% if (typeof googleMapsApiKey !== 'undefined' && googleMapsApiKey) { %>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= googleMapsApiKey %>&callback=initMap" async defer></script>
+<% } else { %>
+<script>
+    // Google Maps API key not configured
+    window.googleMapsLoaded = false;
+</script>
+<% } %>
+<script>
+function initMap() {
+    // Default location (can be updated in settings)
+    const defaultLat = parseFloat('<%= settings.map_latitude || "28.6139" %>');
+    const defaultLng = parseFloat('<%= settings.map_longitude || "77.2090" %>');
+    const address = '<%= (settings.shop_address || "").replace(/'/g, "\\'").replace(/"/g, '&quot;') %>';
+    const shopName = '<%= (settings.shop_name || "RatnaVeda").replace(/'/g, "\\'").replace(/"/g, '&quot;') %>';
+    
+    const location = { lat: defaultLat, lng: defaultLng };
+    
+    const map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 15,
+        center: location,
+        styles: [
+            {
+                featureType: 'poi',
+                elementType: 'labels',
+                stylers: [{ visibility: 'off' }]
+            }
+        ]
+    });
+    
+    const marker = new google.maps.Marker({
+        position: location,
+        map: map,
+        title: shopName,
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 10,
+            fillColor: '#d4af37',
+            fillOpacity: 1,
+            strokeColor: '#ffffff',
+            strokeWeight: 3
+        }
+    });
+    
+    const infoWindow = new google.maps.InfoWindow({
+        content: `
+            <div style="padding: 1rem;">
+                <h3 style="font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: #1a1a1a; margin-bottom: 0.5rem;">
+                    <i class="fas fa-gem" style="color: #d4af37; margin-right: 0.5rem;"></i>
+                    ${shopName}
+                </h3>
+                <p style="color: #4a5568; margin: 0; font-size: 0.9375rem;">${address || 'Visit our store'}</p>
+            </div>
+        `
+    });
+    
+    marker.addListener('click', function() {
+        infoWindow.open(map, marker);
+    });
+    
+    // Try geocoding if address is provided
+    if (address && address.trim() !== '') {
+        const geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ address: address }, function(results, status) {
+            if (status === 'OK' && results[0]) {
+                const newLocation = results[0].geometry.location;
+                map.setCenter(newLocation);
+                marker.setPosition(newLocation);
+            }
+        });
+    }
+}
+
+// Fallback if Google Maps fails to load or API key is not configured
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        if (typeof google === 'undefined' || typeof google.maps === 'undefined' || window.googleMapsLoaded === false) {
+            const mapContainer = document.getElementById('map');
+            if (mapContainer && !mapContainer.querySelector('.map-fallback')) {
+                mapContainer.innerHTML = `
+                    <div class="map-fallback" style="display: flex; align-items: center; justify-content: center; height: 100%; background: linear-gradient(135deg, var(--cream) 0%, rgba(255, 255, 255, 0.8) 100%); flex-direction: column; padding: 2rem; text-align: center;">
+                        <i class="fas fa-map-marked-alt" style="font-size: 4rem; color: var(--gold); margin-bottom: 1rem;"></i>
+                        <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--black); margin-bottom: 0.5rem;">Map Unavailable</h3>
+                        <p style="color: var(--gray); text-align: center; max-width: 400px; margin: 0;">
+                            <%= settings.shop_address || "Please contact us for directions to our store." %>
+                        </p>
+                        <p style="color: var(--gray); text-align: center; max-width: 400px; margin-top: 1rem; font-size: 0.875rem;">
+                            To enable the map, please configure your Google Maps API key in the admin settings.
+                        </p>
+                    </div>
+                `;
+            }
+        }
+    }, 2000); // Wait 2 seconds for Google Maps to load
+});
+
+// Smooth scroll for "View on Map" button
+document.addEventListener('DOMContentLoaded', function() {
+    const viewMapLinks = document.querySelectorAll('a[href="#map-section"]');
+    viewMapLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const mapSection = document.getElementById('map-section');
+            if (mapSection) {
+                mapSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+});
+</script>
+
+

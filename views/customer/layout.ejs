@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+    <link rel="stylesheet" href="/css/customer.css">
+    <link rel="stylesheet" href="/css/toast.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <a href="/" class="navbar-brand">
+                    <i class="fas fa-gem" style="font-size: 1.5rem; margin-right: 0.5rem; color: #667eea;"></i>
+                    <span>RatnaVeda</span>
+                </a>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="navbar-nav" id="navbarNav">
+                    <li><a href="/" class="nav-link">Home</a></li>
+                    <li><a href="/catalog" class="nav-link">Catalog</a></li>
+                    <li><a href="/contact" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <% if (typeof contentFile !== 'undefined') { %>
+            <%- include('./' + contentFile.replace('customer/', '')) %>
+        <% } else if (typeof body !== 'undefined') { %>
+            <%- body %>
+        <% } %>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>RatnaVeda</h4>
+                    <p>Next-Gen Gemstone Inventory & QR Discovery System</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/catalog">Browse Catalog</a></li>
+                        <li><a href="/privacy-policy">Privacy Policy</a></li>
+                        <li><a href="/terms-conditions">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Visit our store to see these gemstones in person</p>
+                    <ul>
+                        <li><a href="/contact">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <%= new Date().getFullYear() %> RatnaVeda. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/customer.js"></script>
+    <script src="/js/toast.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('mobileMenuToggle');
+            const navbarNav = document.getElementById('navbarNav');
+
+            if (menuToggle && navbarNav) {
+                menuToggle.addEventListener('click', function() {
+                    navbarNav.classList.toggle('active');
+                    menuToggle.classList.toggle('active');
+                });
+
+                // Close menu when clicking on a link
+                const navLinks = navbarNav.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        navbarNav.classList.remove('active');
+                        menuToggle.classList.remove('active');
+                    });
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!menuToggle.contains(e.target) && !navbarNav.contains(e.target)) {
+                        navbarNav.classList.remove('active');
+                        menuToggle.classList.remove('active');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

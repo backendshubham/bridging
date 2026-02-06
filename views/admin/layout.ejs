@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/toast.css">
+</head>
+<body class="admin-body">
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <a href="/admin/dashboard" class="sidebar-brand">
+                    <i class="fas fa-gem brand-icon"></i>
+                    <span class="brand-text">RatnaVeda</span>
+                </a>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="/admin/dashboard" class="nav-item <%= typeof page !== 'undefined' && page === 'dashboard' ? 'active' : '' %>">
+                    <i class="fas fa-chart-line nav-icon"></i>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+                <a href="/admin/gemstones" class="nav-item <%= typeof page !== 'undefined' && page === 'gemstones' ? 'active' : '' %>">
+                    <i class="fas fa-gem nav-icon"></i>
+                    <span class="nav-text">Gemstones</span>
+                </a>
+                <a href="/admin/categories" class="nav-item <%= typeof page !== 'undefined' && page === 'categories' ? 'active' : '' %>">
+                    <i class="fas fa-folder nav-icon"></i>
+                    <span class="nav-text">Categories</span>
+                </a>
+                <a href="/admin/master-qr" class="nav-item <%= typeof page !== 'undefined' && page === 'master-qr' ? 'active' : '' %>">
+                    <i class="fas fa-qrcode nav-icon"></i>
+                    <span class="nav-text">Master QR</span>
+                </a>
+                <a href="/admin/settings" class="nav-item <%= typeof page !== 'undefined' && page === 'settings' ? 'active' : '' %>">
+                    <i class="fas fa-cog nav-icon"></i>
+                    <span class="nav-text">Settings</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="/" class="nav-item" target="_blank">
+                    <i class="fas fa-globe nav-icon"></i>
+                    <span class="nav-text">View Site</span>
+                </a>
+                <a href="/admin/logout" class="nav-item">
+                    <i class="fas fa-sign-out-alt nav-icon"></i>
+                    <span class="nav-text">Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-overlay" id="mobileOverlay"></div>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <div class="header-content">
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <h1 class="page-title"><%= typeof title !== 'undefined' ? title : 'Dashboard' %></h1>
+                    <div class="header-actions">
+                        <span class="admin-name">Welcome, <%= typeof admin !== 'undefined' ? admin.username : 'Admin' %></span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <% if (typeof success !== 'undefined' && success.length > 0) { %>
+                    <% success.forEach(function(msg) { %>
+                        <div class="alert alert-success"><%= msg %></div>
+                    <% }); %>
+                <% } %>
+
+                <% if (typeof error !== 'undefined' && error.length > 0) { %>
+                    <% error.forEach(function(msg) { %>
+                        <div class="alert alert-error"><%= msg %></div>
+                    <% }); %>
+                <% } %>
+
+                <% if (typeof contentFile !== 'undefined') { %>
+                    <%- include('./' + contentFile.replace('admin/', '')) %>
+                <% } else if (typeof body !== 'undefined') { %>
+                    <%- body %>
+                <% } %>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/admin.js"></script>
+    <script src="/js/toast.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('mobileMenuToggle');
+            const sidebar = document.querySelector('.admin-sidebar');
+            const overlay = document.getElementById('mobileOverlay');
+
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('open');
+                    overlay.classList.toggle('active');
+                    document.body.classList.toggle('menu-open');
+                });
+            }
+
+            if (overlay) {
+                overlay.addEventListener('click', function() {
+                    sidebar.classList.remove('open');
+                    overlay.classList.remove('active');
+                    document.body.classList.remove('menu-open');
+                });
+            }
+
+            // Close menu on navigation click (mobile)
+            const navItems = document.querySelectorAll('.sidebar-nav .nav-item');
+            navItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        sidebar.classList.remove('open');
+                        overlay.classList.remove('active');
+                        document.body.classList.remove('menu-open');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

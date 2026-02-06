@@ -1,0 +1,514 @@
+<div class="hero">
+    <div class="container">
+        <h1><i class="fas fa-gem" style="margin-right: 0.75rem; color: #d4af37;"></i>Gemstone Collection</h1>
+        <p>Discover our exquisite collection of certified gemstones</p>
+    </div>
+</div>
+
+<div class="section">
+    <div class="container">
+        <div class="catalog-layout">
+            <!-- Desktop Filters Sidebar (Left) -->
+            <aside class="filters-sidebar">
+                <div class="filters-section">
+                    <div class="filters-header">
+                        <h2 class="filters-title"><i class="fas fa-filter"></i>Filters</h2>
+                        <button type="button" class="clear-filters" onclick="clearAllFilters()">Clear All</button>
+                    </div>
+                    <form method="GET" action="/catalog" id="filterForm">
+                        <div class="filter-group">
+                            <label class="filter-label" for="search">Search Gemstones</label>
+                            <input 
+                                type="text" 
+                                id="search" 
+                                name="search" 
+                                class="filter-input" 
+                                placeholder="Search by name, type, or SKU..."
+                                value="<%= typeof filters !== 'undefined' && filters.search ? filters.search : '' %>"
+                            >
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label" for="type">Ratna Type</label>
+                            <select id="type" name="type" class="filter-input">
+                                <option value="">All Types</option>
+                                <% if (typeof ratnaTypes !== 'undefined' && ratnaTypes) { %>
+                                    <% ratnaTypes.forEach(function(type) { %>
+                                        <option value="<%= type %>" <%= typeof filters !== 'undefined' && filters.type === type ? 'selected' : '' %>><%= type %></option>
+                                    <% }); %>
+                                <% } %>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label" for="category">Category</label>
+                            <select id="category" name="category" class="filter-input">
+                                <option value="">All Categories</option>
+                                <% if (typeof categories !== 'undefined' && categories) { %>
+                                    <% categories.forEach(function(cat) { %>
+                                        <option value="<%= cat.slug %>" <%= typeof filters !== 'undefined' && filters.category === cat.slug ? 'selected' : '' %>><%= cat.name %></option>
+                                    <% }); %>
+                                <% } %>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label" for="carat_min">Min Carat</label>
+                            <input 
+                                type="number" 
+                                id="carat_min" 
+                                name="carat_min" 
+                                class="filter-input" 
+                                placeholder="0"
+                                step="0.01"
+                                min="0"
+                                value="<%= typeof filters !== 'undefined' && filters.carat_min ? filters.carat_min : '' %>"
+                            >
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label" for="carat_max">Max Carat</label>
+                            <input 
+                                type="number" 
+                                id="carat_max" 
+                                name="carat_max" 
+                                class="filter-input" 
+                                placeholder="<%= typeof maxCarat !== 'undefined' ? maxCarat : 10 %>"
+                                step="0.01"
+                                min="0"
+                                value="<%= typeof filters !== 'undefined' && filters.carat_max ? filters.carat_max : '' %>"
+                            >
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label" for="price_min">Min Price (₹)</label>
+                            <input 
+                                type="number" 
+                                id="price_min" 
+                                name="price_min" 
+                                class="filter-input" 
+                                placeholder="0"
+                                min="0"
+                                value="<%= typeof filters !== 'undefined' && filters.price_min ? filters.price_min : '' %>"
+                            >
+                        </div>
+
+                        <div class="filter-group">
+                            <label class="filter-label" for="price_max">Max Price (₹)</label>
+                            <input 
+                                type="number" 
+                                id="price_max" 
+                                name="price_max" 
+                                class="filter-input" 
+                                placeholder="<%= typeof maxPrice !== 'undefined' ? parseInt(maxPrice).toLocaleString('en-IN') : '1000000' %>"
+                                min="0"
+                                value="<%= typeof filters !== 'undefined' && filters.price_max ? filters.price_max : '' %>"
+                            >
+                        </div>
+
+                        <div class="filter-actions">
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Apply Filters</button>
+                            <button type="button" class="btn btn-outline" onclick="clearAllFilters()" style="width: 100%; margin-top: 0.5rem;">Clear All</button>
+                        </div>
+                    </form>
+                </div>
+            </aside>
+
+            <!-- Products Section (Right) -->
+            <main class="products-main">
+                <% if (typeof gemstones !== 'undefined' && gemstones && gemstones.length > 0) { %>
+                    <div class="results-count">
+                        <span class="results-count-text">
+                            Showing <span class="results-count-number"><%= typeof pagination !== 'undefined' ? pagination.total : gemstones.length %></span> gemstone<%= (typeof pagination !== 'undefined' ? pagination.total : gemstones.length) !== 1 ? 's' : '' %>
+                            <% if (typeof pagination !== 'undefined' && pagination.pages > 1) { %>
+                                (Page <%= pagination.page %> of <%= pagination.pages %>)
+                            <% } %>
+                        </span>
+                    </div>
+
+                    <div class="products-grid">
+                        <% gemstones.forEach(function(stone) { %>
+                            <a href="/product/<%= stone.sku %>" class="product-card">
+                                <% if (stone.discount_percentage > 0) { %>
+                                    <div class="product-badge">-<%= stone.discount_percentage %>% OFF</div>
+                                <% } %>
+                                <div class="product-image">
+                                    <% if (stone.primary_image) { %>
+                                        <img src="<%= stone.primary_image %>" alt="<%= stone.name %>" loading="lazy">
+                                    <% } else { %>
+                                        <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: var(--gold); font-size: 4rem;"><i class="fas fa-gem"></i></div>
+                                    <% } %>
+                                </div>
+                                <div class="product-info">
+                                    <h3 class="product-name"><%= stone.name %></h3>
+                                    <div class="product-specs">
+                                        <span class="product-spec"><%= stone.ratna_type %></span>
+                                        <span class="product-spec"><%= stone.carat_weight %> ct</span>
+                                        <% if (stone.clarity) { %>
+                                            <span class="product-spec"><%= stone.clarity %></span>
+                                        <% } %>
+                                    </div>
+                                    <div class="product-price-section">
+                                        <span class="product-price">₹<%= parseFloat(stone.final_price).toLocaleString('en-IN') %></span>
+                                        <% if (stone.discount_percentage > 0) { %>
+                                            <span class="product-price-old">₹<%= parseFloat(stone.total_price).toLocaleString('en-IN') %></span>
+                                            <span class="product-discount">Save <%= stone.discount_percentage %>%</span>
+                                        <% } %>
+                                    </div>
+                                    <% if (stone.certificate_type) { %>
+                                        <div style="margin-top: 0.75rem;">
+                                            <span class="badge badge-success">✓ <%= stone.certificate_type %> Certified</span>
+                                        </div>
+                                    <% } %>
+                                </div>
+                            </a>
+                        <% }); %>
+                    </div>
+                <% } else { %>
+                    <div class="empty-state">
+                        <div class="empty-state-icon"><i class="fas fa-search"></i></div>
+                        <h2>No gemstones found</h2>
+                        <p>Try adjusting your filters or search terms to find what you're looking for.</p>
+                        <a href="/catalog" class="btn btn-primary" style="margin-top: 1rem;">View All Gemstones</a>
+                    </div>
+                <% } %>
+                
+                <% if (typeof pagination !== 'undefined' && pagination.pages > 1 && gemstones.length > 0) { %>
+                    <div id="loadMoreContainer" style="text-align: center; margin-top: 3rem; padding: 2rem;">
+                        <div id="loadingIndicator" style="display: none; margin-bottom: 1rem;">
+                            <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--gold);"></i>
+                            <p style="margin-top: 1rem; color: var(--gray);">Loading more gemstones...</p>
+                        </div>
+                        <button id="loadMoreBtn" class="btn btn-outline" style="display: <%= pagination.hasMore ? 'inline-block' : 'none' %>;">
+                            <i class="fas fa-arrow-down" style="margin-right: 0.5rem;"></i>Load More
+                        </button>
+                        <p id="noMoreText" style="display: <%= pagination.hasMore ? 'none' : 'block' %>; color: var(--gray); margin-top: 1rem;">
+                            <i class="fas fa-check-circle" style="color: var(--gold); margin-right: 0.5rem;"></i>All gemstones loaded
+                        </p>
+                    </div>
+                <% } %>
+            </main>
+        </div>
+    </div>
+</div>
+
+<!-- Mobile Filter Button (Sticky Bottom Right) -->
+<button id="mobileFilterBtn" class="mobile-filter-btn" aria-label="Open Filters">
+    <i class="fas fa-filter"></i>
+    <span>Filters</span>
+</button>
+
+<!-- Mobile Filter Overlay -->
+<div id="mobileFilterOverlay" class="mobile-filter-overlay">
+    <div class="mobile-filter-sidebar">
+        <div class="mobile-filter-header">
+            <h3><i class="fas fa-filter"></i> Filters</h3>
+            <button id="closeMobileFilter" class="close-filter-btn" aria-label="Close Filters">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="mobile-filter-content">
+            <form method="GET" action="/catalog" id="mobileFilterForm">
+                <div class="filter-group">
+                    <label class="filter-label" for="mobile_search">Search Gemstones</label>
+                    <input 
+                        type="text" 
+                        id="mobile_search" 
+                        name="search" 
+                        class="filter-input" 
+                        placeholder="Search by name, type, or SKU..."
+                        value="<%= typeof filters !== 'undefined' && filters.search ? filters.search : '' %>"
+                    >
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label" for="mobile_type">Ratna Type</label>
+                    <select id="mobile_type" name="type" class="filter-input">
+                        <option value="">All Types</option>
+                        <% if (typeof ratnaTypes !== 'undefined' && ratnaTypes) { %>
+                            <% ratnaTypes.forEach(function(type) { %>
+                                <option value="<%= type %>" <%= typeof filters !== 'undefined' && filters.type === type ? 'selected' : '' %>><%= type %></option>
+                            <% }); %>
+                        <% } %>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label" for="mobile_category">Category</label>
+                    <select id="mobile_category" name="category" class="filter-input">
+                        <option value="">All Categories</option>
+                        <% if (typeof categories !== 'undefined' && categories) { %>
+                            <% categories.forEach(function(cat) { %>
+                                <option value="<%= cat.slug %>" <%= typeof filters !== 'undefined' && filters.category === cat.slug ? 'selected' : '' %>><%= cat.name %></option>
+                            <% }); %>
+                        <% } %>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label" for="mobile_carat_min">Min Carat</label>
+                    <input 
+                        type="number" 
+                        id="mobile_carat_min" 
+                        name="carat_min" 
+                        class="filter-input" 
+                        placeholder="0"
+                        step="0.01"
+                        min="0"
+                        value="<%= typeof filters !== 'undefined' && filters.carat_min ? filters.carat_min : '' %>"
+                    >
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label" for="mobile_carat_max">Max Carat</label>
+                    <input 
+                        type="number" 
+                        id="mobile_carat_max" 
+                        name="carat_max" 
+                        class="filter-input" 
+                        placeholder="<%= typeof maxCarat !== 'undefined' ? maxCarat : 10 %>"
+                        step="0.01"
+                        min="0"
+                        value="<%= typeof filters !== 'undefined' && filters.carat_max ? filters.carat_max : '' %>"
+                    >
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label" for="mobile_price_min">Min Price (₹)</label>
+                    <input 
+                        type="number" 
+                        id="mobile_price_min" 
+                        name="price_min" 
+                        class="filter-input" 
+                        placeholder="0"
+                        min="0"
+                        value="<%= typeof filters !== 'undefined' && filters.price_min ? filters.price_min : '' %>"
+                    >
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label" for="mobile_price_max">Max Price (₹)</label>
+                    <input 
+                        type="number" 
+                        id="mobile_price_max" 
+                        name="price_max" 
+                        class="filter-input" 
+                        placeholder="<%= typeof maxPrice !== 'undefined' ? parseInt(maxPrice).toLocaleString('en-IN') : '1000000' %>"
+                        min="0"
+                        value="<%= typeof filters !== 'undefined' && filters.price_max ? filters.price_max : '' %>"
+                    >
+                </div>
+
+                <div class="filter-actions" style="position: sticky; bottom: 0; background: white; padding: 1rem 0; border-top: 2px solid var(--gray-light); margin-top: 1rem; z-index: 10;">
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Apply Filters</button>
+                    <button type="button" class="btn btn-outline" onclick="clearAllFilters()" style="width: 100%; margin-top: 0.5rem;">Clear All</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentPage = <%= typeof pagination !== 'undefined' ? pagination.page : 1 %>;
+let totalPages = <%= typeof pagination !== 'undefined' ? pagination.pages : 1 %>;
+let isLoading = false;
+
+function clearAllFilters() {
+    const desktopForm = document.getElementById('filterForm');
+    const mobileForm = document.getElementById('mobileFilterForm');
+    if (desktopForm) desktopForm.reset();
+    if (mobileForm) mobileForm.reset();
+    window.location.href = '/catalog';
+}
+
+// Scroll pagination
+function loadMoreProducts() {
+    if (isLoading || currentPage >= totalPages) return;
+    
+    isLoading = true;
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    const noMoreText = document.getElementById('noMoreText');
+    
+    if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+    if (loadingIndicator) loadingIndicator.style.display = 'block';
+    
+    // Get current filter values
+    const params = new URLSearchParams(window.location.search);
+    params.set('page', currentPage + 1);
+    
+    fetch(`/catalog/api?${params.toString()}`)
+        .then(response => response.json())
+        .then(data => {
+            const productsGrid = document.querySelector('.products-grid');
+            
+            if (productsGrid && data.gemstones && data.gemstones.length > 0) {
+                data.gemstones.forEach(stone => {
+                    const productCard = createProductCard(stone);
+                    productsGrid.appendChild(productCard);
+                });
+                
+                currentPage = data.pagination.page;
+                totalPages = data.pagination.pages;
+                
+                if (!data.pagination.hasMore) {
+                    if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+                    if (noMoreText) noMoreText.style.display = 'block';
+                } else {
+                    if (loadMoreBtn) loadMoreBtn.style.display = 'inline-block';
+                }
+            } else {
+                if (noMoreText) noMoreText.style.display = 'block';
+                if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+            }
+            
+            if (loadingIndicator) loadingIndicator.style.display = 'none';
+            isLoading = false;
+        })
+        .catch(error => {
+            console.error('Error loading more products:', error);
+            if (loadingIndicator) loadingIndicator.style.display = 'none';
+            if (loadMoreBtn) loadMoreBtn.style.display = 'inline-block';
+            isLoading = false;
+        });
+}
+
+function createProductCard(stone) {
+    const card = document.createElement('a');
+    card.href = `/product/${stone.sku}`;
+    card.className = 'product-card';
+    
+    const imageHtml = stone.primary_image 
+        ? `<img src="${stone.primary_image}" alt="${stone.name}" loading="lazy">`
+        : `<div style="display: flex; align-items: center; justify-content: center; height: 100%; color: var(--gold); font-size: 4rem;"><i class="fas fa-gem"></i></div>`;
+    
+    const badgeHtml = stone.discount_percentage > 0
+        ? `<div class="product-badge">-${stone.discount_percentage}% OFF</div>`
+        : '';
+    
+    const priceHtml = stone.discount_percentage > 0
+        ? `<div class="product-price-section">
+            <span class="product-price">₹${parseFloat(stone.final_price).toLocaleString('en-IN')}</span>
+            <span class="product-price-old">₹${parseFloat(stone.total_price).toLocaleString('en-IN')}</span>
+            <span class="product-discount">Save ${stone.discount_percentage}%</span>
+           </div>`
+        : `<div class="product-price-section">
+            <span class="product-price">₹${parseFloat(stone.final_price).toLocaleString('en-IN')}</span>
+           </div>`;
+    
+    const certHtml = stone.certificate_type
+        ? `<div style="margin-top: 0.75rem;"><span class="badge badge-success">✓ ${stone.certificate_type} Certified</span></div>`
+        : '';
+    
+    card.innerHTML = `
+        ${badgeHtml}
+        <div class="product-image">${imageHtml}</div>
+        <div class="product-info">
+            <h3 class="product-name">${stone.name}</h3>
+            <div class="product-specs">
+                <span class="product-spec">${stone.ratna_type}</span>
+                <span class="product-spec">${stone.carat_weight} ct</span>
+                ${stone.clarity ? `<span class="product-spec">${stone.clarity}</span>` : ''}
+            </div>
+            ${priceHtml}
+            ${certHtml}
+        </div>
+    `;
+    
+    return card;
+}
+
+// Load more button click
+document.addEventListener('DOMContentLoaded', function() {
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', loadMoreProducts);
+    }
+    
+    // Infinite scroll
+    let scrollTimeout;
+    window.addEventListener('scroll', function() {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(function() {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000) {
+                loadMoreProducts();
+            }
+        }, 200);
+    });
+    
+    // Mobile filter toggle
+    const mobileFilterBtn = document.getElementById('mobileFilterBtn');
+    const mobileFilterOverlay = document.getElementById('mobileFilterOverlay');
+    const closeMobileFilter = document.getElementById('closeMobileFilter');
+    
+    if (mobileFilterBtn && mobileFilterOverlay) {
+        mobileFilterBtn.addEventListener('click', function() {
+            mobileFilterOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    }
+    
+    if (closeMobileFilter && mobileFilterOverlay) {
+        closeMobileFilter.addEventListener('click', function() {
+            mobileFilterOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
+    
+    if (mobileFilterOverlay) {
+        mobileFilterOverlay.addEventListener('click', function(e) {
+            if (e.target === mobileFilterOverlay) {
+                mobileFilterOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+    
+    // Sync mobile and desktop filter forms
+    const desktopForm = document.getElementById('filterForm');
+    const mobileForm = document.getElementById('mobileFilterForm');
+    
+    if (desktopForm && mobileForm) {
+        // Sync desktop to mobile
+        desktopForm.addEventListener('change', function() {
+            const formData = new FormData(desktopForm);
+            for (let [key, value] of formData.entries()) {
+                const mobileInput = mobileForm.querySelector(`[name="${key}"]`);
+                if (mobileInput) {
+                    if (mobileInput.type === 'checkbox') {
+                        mobileInput.checked = value;
+                    } else {
+                        mobileInput.value = value;
+                    }
+                }
+            }
+        });
+        
+        // Sync mobile to desktop
+        mobileForm.addEventListener('change', function() {
+            const formData = new FormData(mobileForm);
+            for (let [key, value] of formData.entries()) {
+                const desktopInput = desktopForm.querySelector(`[name="${key}"]`);
+                if (desktopInput) {
+                    if (desktopInput.type === 'checkbox') {
+                        desktopInput.checked = value;
+                    } else {
+                        desktopInput.value = value;
+                    }
+                }
+            }
+        });
+        
+        // Close mobile filter after form submission
+        mobileForm.addEventListener('submit', function() {
+            setTimeout(function() {
+                const overlay = document.getElementById('mobileFilterOverlay');
+                if (overlay) {
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            }, 100);
+        });
+    }
+});
+</script>

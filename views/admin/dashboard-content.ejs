@@ -1,0 +1,317 @@
+<div class="analytics-dashboard">
+    <!-- Stats Cards Row -->
+    <div class="stats-grid">
+        <div class="stat-card stat-primary">
+            <div class="stat-header">
+                <div class="stat-icon"><i class="fas fa-gem"></i></div>
+                <div class="stat-trend stat-trend-up">
+                    <span>+12.5%</span>
+                </div>
+            </div>
+            <div class="stat-label">Total Gemstones</div>
+            <div class="stat-value"><%= stats.totalGemstones %></div>
+            <div class="stat-footer">All inventory items</div>
+        </div>
+
+        <div class="stat-card stat-success">
+            <div class="stat-header">
+                <div class="stat-icon"><i class="fas fa-star"></i></div>
+                <div class="stat-trend stat-trend-up">
+                    <span>+8.2%</span>
+                </div>
+            </div>
+            <div class="stat-label">Active Gemstones</div>
+            <div class="stat-value"><%= stats.activeGemstones %></div>
+            <div class="stat-footer">Currently available</div>
+        </div>
+
+        <div class="stat-card stat-info">
+            <div class="stat-header">
+                <div class="stat-icon"><i class="fas fa-folder"></i></div>
+                <div class="stat-trend stat-trend-neutral">
+                    <span>0%</span>
+                </div>
+            </div>
+            <div class="stat-label">Categories</div>
+            <div class="stat-value"><%= stats.totalCategories %></div>
+            <div class="stat-footer">Product categories</div>
+        </div>
+
+        <div class="stat-card stat-warning">
+            <div class="stat-header">
+                <div class="stat-icon"><i class="fas fa-qrcode"></i></div>
+                <div class="stat-trend stat-trend-up">
+                    <span>+24.1%</span>
+                </div>
+            </div>
+            <div class="stat-label">Total Scans</div>
+            <div class="stat-value" id="totalScans">0</div>
+            <div class="stat-footer">QR code scans</div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="dashboard-row">
+        <div class="dashboard-col dashboard-col-8">
+            <div class="dashboard-card">
+                <div class="card-header-modern">
+                    <div>
+                        <h3>Sales & Performance</h3>
+                        <p class="card-subtitle">Gemstone sales overview</p>
+                    </div>
+                    <div class="card-actions">
+                        <button class="icon-btn" title="Settings"><i class="fas fa-cog"></i></button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="salesChart" height="80"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-col dashboard-col-4">
+            <div class="dashboard-card">
+                <div class="card-header-modern">
+                    <div>
+                        <h3>Category Distribution</h3>
+                        <p class="card-subtitle">By gemstone type</p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Tables Row -->
+    <div class="dashboard-row">
+        <div class="dashboard-col dashboard-col-6">
+            <div class="dashboard-card">
+                <div class="card-header-modern">
+                    <div>
+                        <h3>Recent Gemstones</h3>
+                        <p class="card-subtitle">Latest additions</p>
+                    </div>
+                    <a href="/admin/gemstones" class="btn-link">View All →</a>
+                </div>
+                <div class="card-body">
+                    <% if (recentGemstones.length > 0) { %>
+                        <div class="modern-table">
+                            <table class="table-modern">
+                                <thead>
+                                    <tr>
+                                        <th>SKU</th>
+                                        <th>Name</th>
+                                        <th>Type</th>
+                                        <th>Price</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% recentGemstones.slice(0, 5).forEach(function(stone) { %>
+                                        <tr>
+                                            <td><code class="sku-code"><%= stone.sku %></code></td>
+                                            <td>
+                                                <a href="/admin/gemstones/<%= stone.id %>/edit" class="table-link">
+                                                    <%= stone.name %>
+                                                </a>
+                                            </td>
+                                            <td><span class="badge badge-sm"><%= stone.ratna_type %></span></td>
+                                            <td class="price-cell">₹<%= parseFloat(stone.final_price).toLocaleString('en-IN') %></td>
+                                            <td>
+                                                <% if (stone.is_active) { %>
+                                                    <span class="status-badge status-active">Active</span>
+                                                <% } else { %>
+                                                    <span class="status-badge status-inactive">Inactive</span>
+                                                <% } %>
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                </tbody>
+                            </table>
+                        </div>
+                    <% } else { %>
+                        <div class="empty-state-small">
+                            <div class="empty-icon"><i class="fas fa-box-open"></i></div>
+                            <p>No gemstones added yet</p>
+                            <a href="/admin/gemstones/create" class="btn btn-primary btn-sm">Add First Gemstone</a>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-col dashboard-col-6">
+            <div class="dashboard-card">
+                <div class="card-header-modern">
+                    <div>
+                        <h3>Most Scanned</h3>
+                        <p class="card-subtitle">Top QR code scans</p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <% if (mostScanned.length > 0) { %>
+                        <div class="modern-table">
+                            <table class="table-modern">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Scans</th>
+                                        <th>Views</th>
+                                        <th>Trend</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% mostScanned.slice(0, 5).forEach(function(stone) { %>
+                                        <tr>
+                                            <td>
+                                                <a href="/admin/gemstones/<%= stone.id %>/edit" class="table-link">
+                                                    <%= stone.name %>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <span class="badge badge-primary badge-sm"><%= stone.scan_count || 0 %></span>
+                                            </td>
+                                            <td><%= stone.view_count || 0 %></td>
+                                            <td>
+                                                <div class="trend-indicator trend-up">↑</div>
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                </tbody>
+                            </table>
+                        </div>
+                    <% } else { %>
+                        <div class="empty-state-small">
+                            <div class="empty-icon"><i class="fas fa-chart-bar"></i></div>
+                            <p>No scan data available</p>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="dashboard-card">
+        <div class="card-header-modern">
+            <div>
+                <h3>Quick Actions</h3>
+                <p class="card-subtitle">Common tasks</p>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="quick-actions-grid">
+                <a href="/admin/gemstones/create" class="action-card">
+                    <div class="action-icon">➕</div>
+                    <div class="action-title">Add Gemstone</div>
+                    <div class="action-desc">Create new inventory item</div>
+                </a>
+                <a href="/admin/categories" class="action-card">
+                    <div class="action-icon">📁</div>
+                    <div class="action-title">Manage Categories</div>
+                    <div class="action-desc">Organize products</div>
+                </a>
+                <a href="/admin/master-qr" class="action-card">
+                    <div class="action-icon">📱</div>
+                    <div class="action-title">Master QR Code</div>
+                    <div class="action-desc">Generate catalog QR</div>
+                </a>
+                <a href="/admin/settings" class="action-card">
+                    <div class="action-icon">⚙️</div>
+                    <div class="action-title">Settings</div>
+                    <div class="action-desc">Configure system</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Calculate total scans
+    const scanData = <%= JSON.stringify(mostScanned.map(s => s.scan_count || 0)) %>;
+    const totalScans = scanData.reduce((a, b) => a + b, 0);
+    document.getElementById('totalScans').textContent = totalScans.toLocaleString();
+
+    // Sales Chart
+    const salesCtx = document.getElementById('salesChart');
+    if (salesCtx) {
+        new Chart(salesCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Sales (₹)',
+                    data: [120000, 190000, 150000, 250000, 220000, 300000, 280000, 320000, 290000, 350000, 330000, 400000],
+                    borderColor: 'rgb(102, 126, 234)',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }, {
+                    label: 'Views',
+                    data: [120, 190, 150, 250, 220, 300, 280, 320, 290, 350, 330, 400],
+                    borderColor: 'rgb(16, 185, 129)',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Category Chart
+    const categoryCtx = document.getElementById('categoryChart');
+    if (categoryCtx) {
+        new Chart(categoryCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Diamonds', 'Rubies', 'Sapphires', 'Emeralds', 'Others'],
+                datasets: [{
+                    data: [35, 25, 20, 15, 5],
+                    backgroundColor: [
+                        'rgb(102, 126, 234)',
+                        'rgb(239, 68, 68)',
+                        'rgb(59, 130, 246)',
+                        'rgb(16, 185, 129)',
+                        'rgb(156, 163, 175)'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    }
+                }
+            }
+        });
+    }
+});
+</script>

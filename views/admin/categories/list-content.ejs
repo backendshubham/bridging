@@ -1,0 +1,185 @@
+<div class="categories-list">
+
+    <div class="row">
+        <div class="col-12 col-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Add New Category</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="/admin/categories">
+                        <div class="form-group">
+                            <label class="form-label" for="name">Category Name *</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="type">Type *</label>
+                            <select id="type" name="type" class="form-control" required>
+                                <option value="">Select Type</option>
+                                <option value="precious">Precious</option>
+                                <option value="semi_precious">Semi-Precious</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="description">Description</label>
+                            <textarea id="description" name="description" class="form-control" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="sort_order">Sort Order</label>
+                            <input type="number" id="sort_order" name="sort_order" class="form-control" value="0">
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input type="checkbox" id="is_active" name="is_active" class="form-check-input" checked>
+                                <label class="form-check-label" for="is_active">Active</label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Add Category</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Existing Categories</h3>
+                </div>
+                <div class="card-body">
+                    <% if (categories.length > 0) { %>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% categories.forEach(function(cat) { %>
+                                    <tr>
+                                        <td data-label="Name"><strong><%= cat.name %></strong></td>
+                                        <td data-label="Type"><span class="badge badge-primary"><%= cat.type === 'precious' ? 'Precious' : 'Semi-Precious' %></span></td>
+                                        <td data-label="Status">
+                                            <% if (cat.is_active) { %>
+                                                <span class="badge badge-success">Active</span>
+                                            <% } else { %>
+                                                <span class="badge badge-danger">Inactive</span>
+                                            <% } %>
+                                        </td>
+                                        <td data-label="Actions">
+                                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                                <button onclick="editCategory(<%= JSON.stringify(cat).replace(/"/g, '&quot;') %>)" class="btn btn-sm btn-secondary">Edit</button>
+                                                <form method="POST" action="/admin/categories/<%= cat.id %>/delete" style="display: inline;" onsubmit="return confirm('Are you sure? This will not delete gemstones in this category.');">
+                                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <% }); %>
+                            </tbody>
+                        </table>
+                    <% } else { %>
+                        <p>No categories yet. Add your first category using the form on the left.</p>
+                    <% } %>
+                    
+                    <% if (typeof pagination !== 'undefined' && pagination.pages > 1) { %>
+                        <div class="d-flex justify-content-between align-items-center" style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--gray-200);">
+                            <div>Page <%= pagination.page %> of <%= pagination.pages %></div>
+                            <div class="d-flex gap-1">
+                                <% if (pagination.page > 1) { %>
+                                    <a href="?page=<%= pagination.page - 1 %>" class="btn btn-sm btn-outline">Previous</a>
+                                <% } %>
+                                <% if (pagination.page < pagination.pages) { %>
+                                    <a href="?page=<%= pagination.page + 1 %>" class="btn btn-sm btn-primary">Next</a>
+                                <% } %>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="editModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(4px);">
+    <div class="card" style="max-width: 600px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+        <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="margin: 0;">Edit Category</h3>
+            <button type="button" onclick="closeEditModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #4a5568; padding: 0; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 4px; transition: all 0.2s;" onmouseover="this.style.background='#f0f0f0'" onmouseout="this.style.background='none'">&times;</button>
+        </div>
+        <div class="card-body">
+            <form method="POST" id="editForm" action="">
+                <div class="form-group">
+                    <label class="form-label" for="edit_name">Category Name *</label>
+                    <input type="text" id="edit_name" name="name" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="edit_type">Type *</label>
+                    <select id="edit_type" name="type" class="form-control" required>
+                        <option value="precious">Precious</option>
+                        <option value="semi_precious">Semi-Precious</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="edit_description">Description</label>
+                    <textarea id="edit_description" name="description" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="edit_sort_order">Sort Order</label>
+                    <input type="number" id="edit_sort_order" name="sort_order" class="form-control" value="0">
+                </div>
+
+                <div class="form-group">
+                    <div class="form-check">
+                        <input type="checkbox" id="edit_is_active" name="is_active" class="form-check-input">
+                        <label class="form-check-label" for="edit_is_active">Active</label>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2" style="margin-top: 1.5rem;">
+                    <button type="submit" class="btn btn-primary">Update Category</button>
+                    <button type="button" onclick="closeEditModal()" class="btn btn-secondary">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function editCategory(cat) {
+    document.getElementById('edit_name').value = cat.name || '';
+    document.getElementById('edit_type').value = cat.type || 'precious';
+    document.getElementById('edit_description').value = cat.description || '';
+    document.getElementById('edit_sort_order').value = cat.sort_order || 0;
+    document.getElementById('edit_is_active').checked = cat.is_active === true || cat.is_active === 1;
+    document.getElementById('editForm').action = '/admin/categories/' + cat.id;
+    document.getElementById('editModal').style.display = 'flex';
+}
+
+function closeEditModal() {
+    document.getElementById('editModal').style.display = 'none';
+}
+
+// Close modal on outside click
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('editModal');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeEditModal();
+            }
+        });
+    }
+});
+</script>
+

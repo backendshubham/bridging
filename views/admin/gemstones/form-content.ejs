@@ -1,0 +1,278 @@
+<div class="gemstone-form">
+    <div class="action-bar">
+        <h2 style="margin: 0;"><%= gemstone ? 'Edit Gemstone' : 'Add New Gemstone' %></h2>
+        <a href="/admin/gemstones" class="btn btn-secondary">← Back to List</a>
+    </div>
+
+    <form method="POST" action="<%= gemstone ? '/admin/gemstones/' + gemstone.id : '/admin/gemstones' %>" enctype="multipart/form-data" class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-6">
+                    <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--gray-200);">Basic Information</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="sku">SKU *</label>
+                        <input type="text" id="sku" name="sku" class="form-control" required value="<%= gemstone ? gemstone.sku : '' %>">
+                        <div class="form-help">Unique identifier for this gemstone</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="name">Name *</label>
+                        <input type="text" id="name" name="name" class="form-control" required value="<%= gemstone ? gemstone.name : '' %>">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="category_id">Category</label>
+                        <select id="category_id" name="category_id" class="form-control">
+                            <option value="">Select Category</option>
+                            <% categories.forEach(function(cat) { %>
+                                <option value="<%= cat.id %>" <%= gemstone && gemstone.category_id == cat.id ? 'selected' : '' %>><%= cat.name %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="ratna_type">Ratna Type *</label>
+                        <input type="text" id="ratna_type" name="ratna_type" class="form-control" required value="<%= gemstone ? gemstone.ratna_type : '' %>" placeholder="e.g., Manik, Neelam, Panna">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="origin">Origin</label>
+                        <input type="text" id="origin" name="origin" class="form-control" value="<%= gemstone ? gemstone.origin : '' %>" placeholder="e.g., Burma, Sri Lanka">
+                    </div>
+                </div>
+
+                <div class="col-12 col-6">
+                    <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--gray-200);">Physical Specifications</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="carat_weight">Carat Weight *</label>
+                        <input type="number" id="carat_weight" name="carat_weight" class="form-control" step="0.01" min="0.01" required value="<%= gemstone ? gemstone.carat_weight : '' %>">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="color_grade">Color Grade</label>
+                        <input type="text" id="color_grade" name="color_grade" class="form-control" value="<%= gemstone ? gemstone.color_grade : '' %>">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="clarity">Clarity</label>
+                        <select id="clarity" name="clarity" class="form-control">
+                            <option value="">Select Clarity</option>
+                            <option value="VVS" <%= gemstone && gemstone.clarity === 'VVS' ? 'selected' : '' %>>VVS</option>
+                            <option value="VS" <%= gemstone && gemstone.clarity === 'VS' ? 'selected' : '' %>>VS</option>
+                            <option value="SI" <%= gemstone && gemstone.clarity === 'SI' ? 'selected' : '' %>>SI</option>
+                            <option value="I" <%= gemstone && gemstone.clarity === 'I' ? 'selected' : '' %>>I</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="cut">Cut</label>
+                        <input type="text" id="cut" name="cut" class="form-control" value="<%= gemstone ? gemstone.cut : '' %>">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="shape">Shape</label>
+                        <input type="text" id="shape" name="shape" class="form-control" value="<%= gemstone ? gemstone.shape : '' %>" placeholder="e.g., Round, Oval, Princess">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 2rem;">
+                <div class="col-12 col-6">
+                    <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--gray-200);">Certification</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="certificate_type">Certificate Type</label>
+                        <select id="certificate_type" name="certificate_type" class="form-control">
+                            <option value="">Select Certificate</option>
+                            <option value="GIA" <%= gemstone && gemstone.certificate_type === 'GIA' ? 'selected' : '' %>>GIA</option>
+                            <option value="IGI" <%= gemstone && gemstone.certificate_type === 'IGI' ? 'selected' : '' %>>IGI</option>
+                            <option value="GRS" <%= gemstone && gemstone.certificate_type === 'GRS' ? 'selected' : '' %>>GRS</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="certificate_number">Certificate Number</label>
+                        <input type="text" id="certificate_number" name="certificate_number" class="form-control" value="<%= gemstone ? gemstone.certificate_number : '' %>">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="certificate_link">Certificate Link</label>
+                        <input type="url" id="certificate_link" name="certificate_link" class="form-control" value="<%= gemstone ? gemstone.certificate_link : '' %>" placeholder="https://...">
+                    </div>
+                </div>
+
+                <div class="col-12 col-6">
+                    <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--gray-200);">Pricing</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="price_per_carat">Price per Carat (₹) *</label>
+                        <input type="number" id="price_per_carat" name="price_per_carat" class="form-control" step="0.01" min="0" required value="<%= gemstone ? gemstone.price_per_carat : '' %>">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="total_price">Total Price (₹) *</label>
+                        <input type="number" id="total_price" name="total_price" class="form-control" step="0.01" min="0" required value="<%= gemstone ? gemstone.total_price : '' %>">
+                        <div class="form-help">Leave empty to auto-calculate (Carat × Price per Carat)</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="discount_percentage">Discount (%)</label>
+                        <input type="number" id="discount_percentage" name="discount_percentage" class="form-control" step="0.01" min="0" max="100" value="<%= gemstone ? gemstone.discount_percentage : '0' %>">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input type="checkbox" id="is_active" name="is_active" class="form-check-input" <%= gemstone && gemstone.is_active ? 'checked' : 'checked' %>>
+                            <label class="form-check-label" for="is_active">Active (visible to customers)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top: 2rem;">
+                <div class="col-12">
+                    <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--gray-200);">Images</h3>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="primary_image">Primary Image</label>
+                        <% if (gemstone && gemstone.primary_image) { %>
+                            <div style="margin-bottom: 1rem;">
+                                <img src="<%= gemstone.primary_image %>" alt="Current image" style="max-width: 200px; border-radius: var(--radius-md); border: 2px solid var(--gray-300);">
+                            </div>
+                        <% } %>
+                        <input type="file" id="primary_image" name="primary_image" class="form-control" accept="image/*">
+                        <div class="form-help">Upload a high-quality image (max 10MB)</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="gallery_images">Gallery Images (Maximum 5)</label>
+                        <% if (gemstone && gemstone.image_gallery && gemstone.image_gallery.length > 0) { %>
+                            <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
+                                <% gemstone.image_gallery.forEach(function(img) { %>
+                                    <div style="position: relative;">
+                                        <img src="<%= img %>" alt="Gallery image" style="max-width: 150px; border-radius: var(--radius-md); border: 2px solid var(--gray-300);">
+                                    </div>
+                                <% }); %>
+                            </div>
+                            <p style="color: var(--gray-600); font-size: 0.875rem; margin-bottom: 0.5rem;">
+                                Current: <%= gemstone.image_gallery.length %> image(s). You can add up to <%= 5 - gemstone.image_gallery.length %> more.
+                            </p>
+                        <% } %>
+                        <input type="file" id="gallery_images" name="gallery_images" class="form-control" accept="image/*" multiple>
+                        <div class="form-help">Upload up to 5 gallery images (max 10MB each). Total gallery images cannot exceed 5.</div>
+                    </div>
+                </div>
+            </div>
+
+            <% if (gemstone && gemstone.qr_code_data) { %>
+                <div class="row" style="margin-top: 2rem;">
+                    <div class="col-12">
+                        <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--gray-200);">
+                            <i class="fas fa-qrcode" style="color: var(--purple); margin-right: 0.5rem;"></i>
+                            QR Code
+                        </h3>
+                        <div class="qr-code-display" style="text-align: center; padding: 2.5rem; background: linear-gradient(135deg, var(--gray-50) 0%, rgba(107, 70, 193, 0.05) 100%); border-radius: var(--radius-lg); border: 2px solid var(--gray-200);">
+                            <div style="display: inline-block; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); margin-bottom: 1.5rem;">
+                                <img src="<%= gemstone.qr_code_data %>" alt="QR Code" style="max-width: 250px; display: block;">
+                            </div>
+                            <p style="color: var(--gray-600); font-size: 0.875rem; margin-bottom: 1rem; word-break: break-all; padding: 0 1rem;">
+                                <i class="fas fa-link" style="margin-right: 0.5rem;"></i>
+                                <%= gemstone.qr_code %>
+                            </p>
+                            <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+                                <form method="POST" action="/admin/gemstones/<%= gemstone.id %>/regenerate-qr" style="display: inline;">
+                                    <button type="submit" class="btn btn-sm btn-secondary" onclick="return confirm('Are you sure you want to regenerate the QR code?');">
+                                        <i class="fas fa-sync-alt" style="margin-right: 0.5rem;"></i>
+                                        Regenerate QR Code
+                                    </button>
+                                </form>
+                                <button type="button" class="btn btn-sm btn-primary" onclick="downloadQRCode('<%= gemstone.qr_code_data %>', '<%= gemstone.sku %>')">
+                                    <i class="fas fa-download" style="margin-right: 0.5rem;"></i>
+                                    Download QR
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline" onclick="copyQRUrl('<%= gemstone.qr_code %>')">
+                                    <i class="fas fa-copy" style="margin-right: 0.5rem;"></i>
+                                    Copy URL
+                                </button>
+                            </div>
+                            <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(107, 70, 193, 0.05); border-radius: 8px; font-size: 0.875rem; color: var(--gray-600);">
+                                <i class="fas fa-info-circle" style="margin-right: 0.5rem; color: var(--purple);"></i>
+                                Scan this QR code to view the product details page. The QR code automatically tracks scans.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% } else if (gemstone) { %>
+                <div class="row" style="margin-top: 2rem;">
+                    <div class="col-12">
+                        <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--gray-200);">
+                            <i class="fas fa-qrcode" style="color: var(--purple); margin-right: 0.5rem;"></i>
+                            QR Code
+                        </h3>
+                        <div style="text-align: center; padding: 2rem; background: var(--gray-50); border-radius: var(--radius-lg); border: 2px dashed var(--gray-300);">
+                            <i class="fas fa-qrcode" style="font-size: 3rem; color: var(--gray-400); margin-bottom: 1rem;"></i>
+                            <p style="color: var(--gray-600); margin-bottom: 1rem;">QR code will be generated automatically when you save this gemstone.</p>
+                            <form method="POST" action="/admin/gemstones/<%= gemstone.id %>/regenerate-qr" style="display: inline;">
+                                <button type="submit" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-magic" style="margin-right: 0.5rem;"></i>
+                                    Generate QR Code Now
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+
+            <div class="d-flex gap-2" style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid var(--gray-200);">
+                <button type="submit" class="btn btn-primary btn-lg">Save Gemstone</button>
+                <a href="/admin/gemstones" class="btn btn-secondary btn-lg">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script src="/js/image-upload.js"></script>
+<script>
+    // Auto-calculate total price
+    document.getElementById('carat_weight')?.addEventListener('input', calculatePrice);
+    document.getElementById('price_per_carat')?.addEventListener('input', calculatePrice);
+    
+    function calculatePrice() {
+        const carat = parseFloat(document.getElementById('carat_weight').value) || 0;
+        const pricePerCarat = parseFloat(document.getElementById('price_per_carat').value) || 0;
+        const totalPriceInput = document.getElementById('total_price');
+        
+        if (carat > 0 && pricePerCarat > 0) {
+            const calculated = carat * pricePerCarat;
+            if (!totalPriceInput.value || Math.abs(parseFloat(totalPriceInput.value) - calculated) < 0.01) {
+                totalPriceInput.value = calculated.toFixed(2);
+            }
+        }
+    }
+    
+    // QR Code functions
+    function downloadQRCode(dataURL, sku) {
+        const link = document.createElement('a');
+        link.href = dataURL;
+        link.download = `qr-code-${sku}-${Date.now()}.png`;
+        link.click();
+    }
+    
+    function copyQRUrl(url) {
+        navigator.clipboard.writeText(url).then(() => {
+            alert('QR Code URL copied to clipboard!');
+        }).catch(() => {
+            // Fallback for older browsers
+            const textarea = document.createElement('textarea');
+            textarea.value = url;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert('QR Code URL copied to clipboard!');
+        });
+    }
+</script>
+

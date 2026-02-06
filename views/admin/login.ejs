@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+    <link rel="stylesheet" href="/css/toast.css">
+    <style>
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+        .login-card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 440px;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .login-logo {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        }
+        .login-title {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+        .login-subtitle {
+            color: #718096;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        .form-control {
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 0.875rem 1rem;
+            transition: all 0.2s;
+        }
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            transition: all 0.2s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        .btn-primary:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .alert-error {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo"><i class="fas fa-gem"></i></div>
+                <h1 class="login-title">RatnaVeda</h1>
+                <p class="login-subtitle">Admin Portal</p>
+            </div>
+
+            <form method="POST" action="/admin/login" id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        class="form-control" 
+                        required 
+                        autofocus
+                        placeholder="Enter your username"
+                        autocomplete="username"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="form-control" 
+                        required
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                    >
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;" id="submitBtn">
+                    <span id="btnText">Sign In</span>
+                    <span id="btnLoader" style="display: none;"><i class="fas fa-spinner fa-spin"></i> Signing in...</span>
+                </button>
+            </form>
+        </div>
+    </div>
+    <script src="/js/toast.js"></script>
+    <script>
+        (function() {
+            // Wait for toast to be available
+            function initLogin() {
+                // Check for error from server-side render
+                <% if (typeof error !== 'undefined' && error) { %>
+                    if (typeof toast !== 'undefined') {
+                        toast.error('<%= error %>', 'Login Failed');
+                    }
+                    // Clear form inputs on error
+                    const usernameField = document.getElementById('username');
+                    const passwordField = document.getElementById('password');
+                    if (usernameField) usernameField.value = '';
+                    if (passwordField) passwordField.value = '';
+                    if (usernameField) usernameField.focus();
+                <% } %>
+
+                // Handle form submission
+                const loginForm = document.getElementById('loginForm');
+                if (loginForm) {
+                    const submitBtn = document.getElementById('submitBtn');
+                    const btnText = document.getElementById('btnText');
+                    const btnLoader = document.getElementById('btnLoader');
+
+                    loginForm.addEventListener('submit', function(e) {
+                        // Validate form before submission
+                        const username = document.getElementById('username').value.trim();
+                        const password = document.getElementById('password').value.trim();
+                        
+                        if (!username || !password) {
+                            e.preventDefault();
+                            if (typeof toast !== 'undefined') {
+                                toast.error('Please enter both username and password.', 'Validation Error');
+                            }
+                            return false;
+                        }
+                        
+                        // Show loading state but don't prevent submission
+                        if (submitBtn) submitBtn.disabled = true;
+                        if (btnText) btnText.style.display = 'none';
+                        if (btnLoader) btnLoader.style.display = 'inline';
+                        
+                        // Form will submit normally
+                    });
+                }
+
+                // Auto-focus username if empty
+                const usernameField = document.getElementById('username');
+                if (usernameField && !usernameField.value) {
+                    usernameField.focus();
+                }
+            }
+
+            // Run when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initLogin);
+            } else {
+                initLogin();
+            }
+        })();
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,154 @@
+<div class="gemstones-list">
+    <div class="action-bar">
+        <div class="d-flex gap-2" style="flex-wrap: wrap;">
+            <a href="/admin/gemstones/create" class="btn btn-primary">+ Add New Gemstone</a>
+        </div>
+        <form method="GET" action="/admin/gemstones" class="search-box">
+            <input type="text" name="search" placeholder="Search by SKU, name, or type..." value="<%= typeof filters !== 'undefined' && filters.search ? filters.search : '' %>">
+            <button type="submit" style="background: none; border: none; cursor: pointer; color: #667eea; font-size: 1.125rem;"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <% if (gemstones.length > 0) { %>
+                <div style="overflow-x: auto;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>SKU</th>
+                                <th>Name</th>
+                                <th>Type</th>
+                                <th>Carat</th>
+                                <th>Price</th>
+                                <th>QR Code</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% gemstones.forEach(function(stone) { %>
+                                <tr>
+                                    <td data-label="Image">
+                                        <% if (stone.primary_image) { %>
+                                            <img src="<%= stone.primary_image %>" alt="<%= stone.name %>" style="width: 60px; height: 60px; object-fit: cover; border-radius: var(--radius-md);">
+                                        <% } else { %>
+                                            <div style="width: 60px; height: 60px; background: var(--gray-200); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; color: #667eea;"><i class="fas fa-gem"></i></div>
+                                        <% } %>
+                                    </td>
+                                    <td data-label="SKU"><strong><%= stone.sku %></strong></td>
+                                    <td data-label="Name"><%= stone.name %></td>
+                                    <td data-label="Type"><%= stone.ratna_type %></td>
+                                    <td data-label="Carat"><%= stone.carat_weight %> ct</td>
+                                    <td data-label="Price">₹<%= parseFloat(stone.final_price).toLocaleString('en-IN') %></td>
+                                    <td data-label="QR Code">
+                                        <% if (stone.qr_code_data) { %>
+                                            <div class="qr-code-preview" style="position: relative; display: inline-block;">
+                                                <img src="<%= stone.qr_code_data %>" alt="QR Code" style="width: 50px; height: 50px; border-radius: 4px; cursor: pointer;" onclick="showQRModal('<%= stone.sku %>', '<%= stone.qr_code_data %>', '<%= stone.qr_code %>')">
+                                                <div class="qr-tooltip" style="position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background: var(--black); color: var(--white); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; white-space: nowrap; margin-bottom: 0.5rem; opacity: 0; pointer-events: none; transition: opacity 0.3s;">Click to view</div>
+                                            </div>
+                                        <% } else { %>
+                                            <span class="badge badge-warning" style="background: #f59e0b; color: white;">No QR</span>
+                                        <% } %>
+                                    </td>
+                                    <td data-label="Status">
+                                        <% if (stone.is_active) { %>
+                                            <span class="badge badge-success">Active</span>
+                                        <% } else { %>
+                                            <span class="badge badge-danger">Inactive</span>
+                                        <% } %>
+                                    </td>
+                                    <td data-label="Actions">
+                                        <div class="d-flex gap-1" style="flex-wrap: wrap;">
+                                            <a href="/product/<%= stone.sku %>" target="_blank" class="btn btn-sm btn-outline" title="View"><i class="fas fa-eye"></i></a>
+                                            <a href="/admin/gemstones/<%= stone.id %>/edit" class="btn btn-sm btn-secondary" title="Edit"><i class="fas fa-edit"></i></a>
+                                            <form method="POST" action="/admin/gemstones/<%= stone.id %>/delete" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this gemstone?');">
+                                                <button type="submit" class="btn btn-sm btn-danger" title="Delete"><i class="fas fa-trash"></i></button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+
+                <% if (pagination.pages > 1) { %>
+                    <div class="d-flex justify-content-between align-items-center" style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--gray-200);">
+                        <div>Page <%= pagination.page %> of <%= pagination.pages %></div>
+                        <div class="d-flex gap-1">
+                            <% if (pagination.page > 1) { %>
+                                <a href="?page=<%= pagination.page - 1 %>" class="btn btn-sm btn-outline">Previous</a>
+                            <% } %>
+                            <% if (pagination.page < pagination.pages) { %>
+                                <a href="?page=<%= pagination.page + 1 %>" class="btn btn-sm btn-outline">Next</a>
+                            <% } %>
+                        </div>
+                    </div>
+                <% } %>
+            <% } else { %>
+                <div style="text-align: center; padding: 3rem;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">💎</div>
+                    <h3>No gemstones found</h3>
+                    <p style="color: var(--gray-600); margin-bottom: 1.5rem;">Get started by adding your first gemstone.</p>
+                    <a href="/admin/gemstones/create" class="btn btn-primary">Add New Gemstone</a>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<!-- QR Code Modal -->
+<div id="qrModal" class="qr-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); z-index: 10000; align-items: center; justify-content: center;">
+    <div class="qr-modal-content" style="background: white; padding: 2rem; border-radius: 16px; max-width: 400px; text-align: center; position: relative;">
+        <button class="qr-modal-close" onclick="closeQRModal()" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--gray);">&times;</button>
+        <h3 style="margin-bottom: 1rem; font-family: 'Playfair Display', serif;">QR Code</h3>
+        <div id="qrModalImage" style="margin: 1rem 0;">
+            <!-- QR code image will be inserted here -->
+        </div>
+        <p id="qrModalUrl" style="color: var(--gray); font-size: 0.875rem; word-break: break-all; margin-top: 1rem;"></p>
+        <div style="margin-top: 1.5rem; display: flex; gap: 0.5rem; justify-content: center;">
+            <button onclick="downloadQR()" class="btn btn-primary btn-sm">Download</button>
+            <button onclick="copyQRUrl()" class="btn btn-secondary btn-sm">Copy URL</button>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentQRData = { url: '', dataURL: '' };
+
+function showQRModal(sku, qrDataURL, qrUrl) {
+    currentQRData.url = qrUrl;
+    currentQRData.dataURL = qrDataURL;
+    
+    document.getElementById('qrModalImage').innerHTML = `<img src="${qrDataURL}" alt="QR Code" style="max-width: 250px; border: 2px solid var(--gray-light); border-radius: 8px; padding: 0.5rem; background: white;">`;
+    document.getElementById('qrModalUrl').textContent = qrUrl;
+    document.getElementById('qrModal').style.display = 'flex';
+}
+
+function closeQRModal() {
+    document.getElementById('qrModal').style.display = 'none';
+}
+
+function downloadQR() {
+    const link = document.createElement('a');
+    link.href = currentQRData.dataURL;
+    link.download = `qr-code-${Date.now()}.png`;
+    link.click();
+}
+
+function copyQRUrl() {
+    navigator.clipboard.writeText(currentQRData.url).then(() => {
+        alert('URL copied to clipboard!');
+    });
+}
+
+// Close modal on outside click
+document.getElementById('qrModal')?.addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeQRModal();
+    }
+});
+</script>
+

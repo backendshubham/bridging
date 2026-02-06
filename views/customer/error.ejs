@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head') %>
+    <link rel="stylesheet" href="/css/customer.css">
+</head>
+<body>
+    <div class="section">
+        <div class="container">
+            <div class="empty-state">
+                <div class="empty-state-icon">⚠️</div>
+                <h1><%= typeof title !== 'undefined' ? title : 'Error' %></h1>
+                <p style="color: var(--gray-600);"><%= typeof message !== 'undefined' ? message : 'An error occurred' %></p>
+                <a href="/catalog" class="btn btn-primary" style="margin-top: 1rem;">Go to Catalog</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

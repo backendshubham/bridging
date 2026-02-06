@@ -1,0 +1,86 @@
+<div class="settings">
+    <div class="card">
+        <div class="card-header">
+            <h2>System Settings</h2>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="/admin/settings">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--gray-200);">Shop Information</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="shop_name">Shop Name</label>
+                            <input type="text" id="shop_name" name="shop_name" class="form-control" value="<%= settings.shop_name || '' %>">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="shop_address">Shop Address</label>
+                            <textarea id="shop_address" name="shop_address" class="form-control" rows="3"><%= settings.shop_address || '' %></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="contact_email">Contact Email</label>
+                            <input type="email" id="contact_email" name="contact_email" class="form-control" value="<%= settings.contact_email || '' %>">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="contact_phone">Contact Phone</label>
+                            <input type="tel" id="contact_phone" name="contact_phone" class="form-control" value="<%= settings.contact_phone || '' %>">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="business_hours">Business Hours</label>
+                            <textarea id="business_hours" name="business_hours" class="form-control" rows="3"><%= settings.business_hours || '' %></textarea>
+                            <div class="form-help">Enter your business hours. Use line breaks for multiple lines.</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Map Location</label>
+                            <div class="row" style="margin: 0 -0.5rem;">
+                                <div class="col-6" style="padding: 0 0.5rem;">
+                                    <label class="form-label" for="map_latitude" style="font-size: 0.875rem;">Latitude</label>
+                                    <input type="text" id="map_latitude" name="map_latitude" class="form-control" value="<%= settings.map_latitude || '' %>" placeholder="28.6139">
+                                </div>
+                                <div class="col-6" style="padding: 0 0.5rem;">
+                                    <label class="form-label" for="map_longitude" style="font-size: 0.875rem;">Longitude</label>
+                                    <input type="text" id="map_longitude" name="map_longitude" class="form-control" value="<%= settings.map_longitude || '' %>" placeholder="77.2090">
+                                </div>
+                            </div>
+                            <div class="form-help">Enter the coordinates for your shop location. You can find these on Google Maps by right-clicking on your location.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 2rem;">
+                    <div class="col-12">
+                        <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--gray-200);">Legal Pages</h3>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="privacy_policy">Privacy Policy</label>
+                            <div class="form-summary-note">
+                                <strong>Summary:</strong> This policy explains how we collect, use, and protect your personal information when you use our services. It covers data collection, storage, sharing practices, user rights, and contact information for privacy concerns.
+                            </div>
+                            <textarea id="privacy_policy" name="privacy_policy" class="form-control" rows="10"><%= settings.privacy_policy || '' %></textarea>
+                            <div class="form-help">HTML content is supported. Include information about data collection, usage, storage, user rights, and contact details.</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="terms_conditions">Terms & Conditions</label>
+                            <div class="form-summary-note">
+                                <strong>Summary:</strong> These terms govern the use of our platform and services. They outline user responsibilities, service limitations, payment terms, intellectual property rights, dispute resolution, and liability limitations.
+                            </div>
+                            <textarea id="terms_conditions" name="terms_conditions" class="form-control" rows="10"><%= settings.terms_conditions || '' %></textarea>
+                            <div class="form-help">HTML content is supported. Include user responsibilities, service terms, payment policies, intellectual property, and legal disclaimers.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2" style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid var(--gray-200);">
+                    <button type="submit" class="btn btn-primary btn-lg">Save Settings</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
