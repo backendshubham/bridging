@@ -573,6 +573,9 @@ body {
   position: relative;
   z-index: 2;
   background: var(--white);
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
 }
 
 .product-name {
@@ -607,9 +610,9 @@ body {
 
 .product-price-section {
   display: flex;
-  align-items: baseline;
-  gap: 1rem;
-  margin-top: 1.5rem;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: auto;
   padding-top: 1.5rem;
   border-top: 2px solid var(--gray-light);
   flex-wrap: wrap;
@@ -619,9 +622,10 @@ body {
   font-family: 'Playfair Display', serif;
   font-size: 1.75rem;
   font-weight: 700;
-  color: var(--purple);
+  color: var(--purple) !important;
   line-height: 1.2;
-  display: block;
+  display: inline-block;
+  margin: 0;
 }
 
 .product-price-old {
@@ -631,16 +635,19 @@ body {
   font-weight: 400;
   line-height: 1.2;
   display: inline-block;
+  margin: 0;
 }
 
 .product-discount {
   font-size: 0.875rem;
   color: var(--gold);
   font-weight: 600;
-  background: rgba(212, 175, 55, 0.1);
-  padding: 0.25rem 0.75rem;
+  background: rgba(212, 175, 55, 0.15);
+  padding: 0.375rem 0.875rem;
   border-radius: 6px;
   display: inline-block;
+  margin: 0;
+  border: 1px solid rgba(212, 175, 55, 0.2);
 }
 
 /* Premium Product Detail */
@@ -2036,4 +2043,35 @@ html {
 
 .btn-back-catalog:hover i {
   transform: translateX(-4px);
+}
+
+/* Badge Styles for Customer Pages */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 0.875rem;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+  gap: 0.375rem;
+}
+
+.badge-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.badge-info {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.badge-primary {
+  background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(107, 70, 193, 0.3);
 }
