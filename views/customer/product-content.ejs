@@ -1,3 +1,13 @@
+<%
+// Declare allImages once at the top
+let allImages = [];
+if (gemstone.primary_image) {
+    allImages.push(gemstone.primary_image);
+}
+if (gemstone.image_gallery && gemstone.image_gallery.length > 0) {
+    allImages = allImages.concat(gemstone.image_gallery);
+}
+%>
 <div class="section">
     <div class="container">
         <div class="product-detail">
@@ -6,15 +16,6 @@
                     <!-- Image Carousel -->
                     <div class="product-carousel-wrapper">
                         <div class="product-carousel" id="productCarousel">
-                            <% 
-                            let allImages = [];
-                            if (gemstone.primary_image) {
-                                allImages.push(gemstone.primary_image);
-                            }
-                            if (gemstone.image_gallery && gemstone.image_gallery.length > 0) {
-                                allImages = allImages.concat(gemstone.image_gallery);
-                            }
-                            %>
                             <% if (allImages.length > 0) { %>
                                 <% allImages.forEach(function(img, index) { %>
                                     <div class="carousel-slide <%= index === 0 ? 'active' : '' %>">
@@ -108,17 +109,17 @@
                     </div>
 
                     <div class="product-price-section">
-                        <div class="price-main">₹<%= parseFloat(gemstone.final_price).toLocaleString('en-IN') %></div>
+                        <div style="display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap;">
+                            <div class="price-main">₹<%= parseFloat(gemstone.final_price).toLocaleString('en-IN') %></div>
+                            <% if (gemstone.discount_percentage > 0 && gemstone.total_price) { %>
+                                <div class="product-price-old" style="font-size: 1.125rem; color: #9ca3af !important; text-decoration: line-through; font-weight: 400;">₹<%= parseFloat(gemstone.total_price).toLocaleString('en-IN') %></div>
+                            <% } %>
+                        </div>
                         <div class="price-per-carat">₹<%= parseFloat(gemstone.price_per_carat).toLocaleString('en-IN') %> per carat</div>
                         <% if (gemstone.discount_percentage > 0) { %>
-                            <div class="discount-badge">
+                            <div class="product-discount" style="font-size: 0.875rem; color: #d97706 !important; font-weight: 600; background: #fef3c7; padding: 0.5rem 1rem; border-radius: 8px; display: inline-block; margin-top: 0.5rem; border: 1px solid #fde68a;">
                                 <i class="fas fa-tag" style="margin-right: 0.5rem;"></i>
-                                Save <%= gemstone.discount_percentage %>% 
-                                <% if (gemstone.total_price) { %>
-                                    <span class="discount-old-price">
-                                        (Was ₹<%= parseFloat(gemstone.total_price).toLocaleString('en-IN') %>)
-                                    </span>
-                                <% } %>
+                                Save <%= gemstone.discount_percentage %>%
                             </div>
                         <% } %>
                     </div>
@@ -166,15 +167,6 @@
 
 <script>
 let currentSlide = 0;
-<% 
-let allImages = [];
-if (gemstone.primary_image) {
-    allImages.push(gemstone.primary_image);
-}
-if (gemstone.image_gallery && gemstone.image_gallery.length > 0) {
-    allImages = allImages.concat(gemstone.image_gallery);
-}
-%>
 const totalSlides = <%= allImages.length || 1 %>;
 
 function changeSlide(direction) {
