@@ -8,6 +8,7 @@ const compression = require('compression');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const flash = require('express-flash');
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
@@ -37,6 +38,14 @@ app.use('/api/', limiter);
 if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev'));
 }
+
+// CORS configuration for API routes
+app.use('/api', cors({
+  origin: process.env.FRONTEND_URL || '*',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // Body parsing
 app.use(express.json());
@@ -90,7 +99,9 @@ app.use((req, res, next) => {
 // Routes
 const adminRoutes = require('./routes/adminRoutes');
 const customerRoutes = require('./routes/customerRoutes');
+const apiRoutes = require('./routes/apiRoutes');
 
+app.use('/api/v1', apiRoutes);
 app.use('/admin', adminRoutes);
 app.use('/', customerRoutes);
 
