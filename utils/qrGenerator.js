@@ -13,10 +13,10 @@ const generateQRCode = async (gemstoneId, type = 'product') => {
     let qrData;
     if (type === 'product') {
       // Product-specific QR code with tracking parameter
-      qrData = `${process.env.APP_URL || 'http://localhost:3000'}/product/${gemstone.sku}?qr=true`;
+      qrData = `${process.env.APP_URL || 'http://localhost:3001'}/product/${gemstone.sku}?qr=true`;
     } else {
       // Master QR code for entire catalog
-      qrData = `${process.env.APP_URL || 'http://localhost:3000'}/catalog`;
+      qrData = `${process.env.APP_URL || 'http://localhost:3001'}/catalog`;
     }
     
     // Generate QR code as data URL
@@ -26,7 +26,7 @@ const generateQRCode = async (gemstoneId, type = 'product') => {
       quality: 0.92,
       margin: 1,
       color: {
-        dark: '#000000',
+        dark: '#1A1632',
         light: '#FFFFFF'
       },
       width: 300
@@ -54,14 +54,14 @@ const generateQRCode = async (gemstoneId, type = 'product') => {
 
 const generateMasterQR = async () => {
   try {
-    const qrData = `${process.env.APP_URL || 'http://localhost:3000'}/catalog`;
+    const qrData = `${process.env.APP_URL || 'http://localhost:3001'}/catalog`;
     const qrCodeDataURL = await QRCode.toDataURL(qrData, {
       errorCorrectionLevel: 'H',
       type: 'image/png',
       quality: 0.92,
       margin: 1,
       color: {
-        dark: '#000000',
+        dark: '#1A1632',
         light: '#FFFFFF'
       },
       width: 400

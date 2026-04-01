@@ -1,14 +1,14 @@
 <div class="gemstone-form">
-    <div class="action-bar">
-        <h2 style="margin: 0;"><%= gemstone ? 'Edit Gemstone' : 'Add New Gemstone' %></h2>
+    <div class="action-bar" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+        <h2 style="margin: 0; font-family: 'Playfair Display', serif; font-weight: 700; color: var(--admin-ink);"><%= gemstone ? 'Edit Gemstone' : 'Add New Gemstone' %></h2>
         <a href="/admin/gemstones" class="btn btn-secondary">← Back to List</a>
     </div>
 
-    <form method="POST" action="<%= gemstone ? '/admin/gemstones/' + gemstone.id : '/admin/gemstones' %>" enctype="multipart/form-data" class="card">
+    <form method="POST" action="<%= gemstone ? '/admin/gemstones/' + gemstone.id : '/admin/gemstones' %>" enctype="multipart/form-data" class="dashboard-card">
         <div class="card-body">
-            <div class="row">
-                <div class="col-12 col-6">
-                    <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--gray-200);">Basic Information</h3>
+            <div class="dashboard-row">
+                <div class="dashboard-col dashboard-col-6">
+                    <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--admin-gold); font-family: 'Playfair Display', serif;">Basic Information</h3>
                     
                     <div class="form-group">
                         <label class="form-label" for="sku">SKU *</label>
@@ -42,8 +42,8 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-6">
-                    <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--gray-200);">Physical Specifications</h3>
+                <div class="dashboard-col dashboard-col-6">
+                    <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--admin-gold); font-family: 'Playfair Display', serif;">Physical Specifications</h3>
                     
                     <div class="form-group">
                         <label class="form-label" for="carat_weight">Carat Weight *</label>
@@ -78,9 +78,9 @@
                 </div>
             </div>
 
-            <div class="row" style="margin-top: 2rem;">
-                <div class="col-12 col-6">
-                    <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--gray-200);">Certification</h3>
+            <div class="dashboard-row" style="margin-top: 2rem;">
+                <div class="dashboard-col dashboard-col-6">
+                    <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--admin-gold); font-family: 'Playfair Display', serif;">Certification</h3>
                     
                     <div class="form-group">
                         <label class="form-label" for="certificate_type">Certificate Type</label>
@@ -103,8 +103,8 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-6">
-                    <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--gray-200);">Pricing</h3>
+                <div class="dashboard-col dashboard-col-6">
+                    <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--admin-gold); font-family: 'Playfair Display', serif;">Pricing</h3>
                     
                     <div class="form-group">
                         <label class="form-label" for="price_per_carat">Price per Carat (₹) *</label>
@@ -123,97 +123,92 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="form-check">
-                            <input type="checkbox" id="is_active" name="is_active" class="form-check-input" <%= gemstone && gemstone.is_active ? 'checked' : 'checked' %>>
-                            <label class="form-check-label" for="is_active">Active (visible to customers)</label>
+                        <div class="form-check" style="display: flex; align-items: center; gap: 0.75rem; margin-top: 1rem;">
+                            <input type="checkbox" id="is_active" name="is_active" class="form-check-input" style="width: 1.25rem; height: 1.25rem; accent-color: var(--admin-emerald);" <%= gemstone && gemstone.is_active ? 'checked' : 'checked' %>>
+                            <label class="form-check-label" for="is_active" style="font-weight: 600; color: var(--admin-txt);">Active (visible to customers)</label>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row" style="margin-top: 2rem;">
-                <div class="col-12">
-                    <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--gray-200);">Images</h3>
+            <div class="dashboard-row" style="margin-top: 2rem;">
+                <div class="dashboard-col dashboard-col-12">
+                    <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--admin-gold); font-family: 'Playfair Display', serif;">Images</h3>
                     
-                    <div class="form-group">
-                        <label class="form-label" for="primary_image">Primary Image</label>
-                        <% if (gemstone && gemstone.primary_image) { %>
-                            <div style="margin-bottom: 1rem;">
-                                <img src="<%= gemstone.primary_image %>" alt="Current image" style="max-width: 200px; border-radius: var(--radius-md); border: 2px solid var(--gray-300);">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                        <div class="form-group">
+                            <label class="form-label" for="primary_image">Primary Image</label>
+                            <div id="primary_preview_container" style="margin-bottom: 1.5rem; <%= gemstone && gemstone.primary_image ? '' : 'display: none;' %>">
+                                <img id="primary_preview_image" src="<%= gemstone ? gemstone.primary_image : '' %>" alt="Primary preview" style="max-width: 100%; height: 250px; object-fit: cover; border-radius: var(--r-md); border: 2px solid var(--admin-gold); box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
                             </div>
-                        <% } %>
-                        <input type="file" id="primary_image" name="primary_image" class="form-control" accept="image/*">
-                        <div class="form-help">Upload a high-quality image (max 10MB)</div>
-                    </div>
+                            <input type="file" id="primary_image" name="primary_image" class="form-control" accept="image/*">
+                            <div class="form-help">Upload a high-quality product image</div>
+                        </div>
 
-                    <div class="form-group">
-                        <label class="form-label" for="gallery_images">Gallery Images (Maximum 5)</label>
-                        <% if (gemstone && gemstone.image_gallery && gemstone.image_gallery.length > 0) { %>
-                            <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem;">
-                                <% gemstone.image_gallery.forEach(function(img) { %>
-                                    <div style="position: relative;">
-                                        <img src="<%= img %>" alt="Gallery image" style="max-width: 150px; border-radius: var(--radius-md); border: 2px solid var(--gray-300);">
-                                    </div>
-                                <% }); %>
+                        <div class="form-group">
+                            <div id="gallery_preview_container" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-bottom: 1.5rem; <%= gemstone && gemstone.image_gallery && gemstone.image_gallery.length > 0 ? '' : 'display: none;' %>">
+                                <% if (gemstone && gemstone.image_gallery && gemstone.image_gallery.length > 0) { %>
+                                    <% gemstone.image_gallery.forEach(function(img) { %>
+                                        <div class="gallery-preview-item">
+                                            <img src="<%= img %>" alt="Gallery image" style="width: 100%; height: 80px; object-fit: cover; border-radius: var(--r-sm); border: 1px solid #e2e8f0;">
+                                        </div>
+                                    <% }); %>
+                                <% } %>
                             </div>
-                            <p style="color: var(--gray-600); font-size: 0.875rem; margin-bottom: 0.5rem;">
-                                Current: <%= gemstone.image_gallery.length %> image(s). You can add up to <%= 5 - gemstone.image_gallery.length %> more.
-                            </p>
-                        <% } %>
-                        <input type="file" id="gallery_images" name="gallery_images" class="form-control" accept="image/*" multiple>
-                        <div class="form-help">Upload up to 5 gallery images (max 10MB each). Total gallery images cannot exceed 5.</div>
+                            <div id="gallery_new_selection_info" style="margin-bottom: 0.5rem; font-size: 0.8125rem; color: var(--admin-txt); font-weight: 600; display: none;">New selection will replace existing gallery below upon saving.</div>
+                            
+                            <input type="file" id="gallery_images" name="gallery_images" class="form-control" accept="image/*" multiple>
+                            <div class="form-help">Add up to 5 supporting images</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <% if (gemstone && gemstone.qr_code_data) { %>
-                <div class="row" style="margin-top: 2rem;">
-                    <div class="col-12">
-                        <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--gray-200);">
-                            <i class="fas fa-qrcode" style="color: var(--purple); margin-right: 0.5rem;"></i>
-                            QR Code
+                <div class="dashboard-row" style="margin-top: 3rem;">
+                    <div class="dashboard-col dashboard-col-12">
+                        <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--admin-gold); font-family: 'Playfair Display', serif;">
+                            <i class="fas fa-qrcode" style="color: var(--admin-gold); margin-right: 0.5rem;"></i>
+                            Product Authentication QR
                         </h3>
-                        <div class="qr-code-display" style="text-align: center; padding: 2.5rem; background: linear-gradient(135deg, var(--gray-50) 0%, rgba(107, 70, 193, 0.05) 100%); border-radius: var(--radius-lg); border: 2px solid var(--gray-200);">
-                            <div style="display: inline-block; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); margin-bottom: 1.5rem;">
-                                <img src="<%= gemstone.qr_code_data %>" alt="QR Code" style="max-width: 250px; display: block;">
+                        <div class="qr-container">
+                            <div class="qr-image-wrapper">
+                                <img src="<%= gemstone.qr_code_data %>" alt="QR Code">
                             </div>
-                            <p style="color: var(--gray-600); font-size: 0.875rem; margin-bottom: 1rem; word-break: break-all; padding: 0 1rem;">
-                                <i class="fas fa-link" style="margin-right: 0.5rem;"></i>
-                                <%= gemstone.qr_code %>
-                            </p>
-                            <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
-                                <form method="POST" action="/admin/gemstones/<%= gemstone.id %>/regenerate-qr" style="display: inline;">
-                                    <button type="submit" class="btn btn-sm btn-secondary" onclick="return confirm('Are you sure you want to regenerate the QR code?');">
-                                        <i class="fas fa-sync-alt" style="margin-right: 0.5rem;"></i>
-                                        Regenerate QR Code
+                            <div style="text-align: center;">
+                                <p style="color: var(--admin-txt); font-weight: 700; font-family: monospace; letter-spacing: 1px; background: var(--admin-bg); padding: 0.5rem 1rem; border-radius: 6px; margin-bottom: 1.5rem; display: inline-block;">
+                                    <%= gemstone.sku %>
+                                </p>
+                                <div class="qr-actions">
+                                    <button type="button" class="btn btn-primary" onclick="downloadQRCode('<%= gemstone.qr_code_data %>', '<%= gemstone.sku %>')">
+                                        <i class="fas fa-download"></i> Download PNG
                                     </button>
-                                </form>
-                                <button type="button" class="btn btn-sm btn-primary" onclick="downloadQRCode('<%= gemstone.qr_code_data %>', '<%= gemstone.sku %>')">
-                                    <i class="fas fa-download" style="margin-right: 0.5rem;"></i>
-                                    Download QR
-                                </button>
-                                <button type="button" class="btn btn-sm btn-outline" onclick="copyQRUrl('<%= gemstone.qr_code %>')">
-                                    <i class="fas fa-copy" style="margin-right: 0.5rem;"></i>
-                                    Copy URL
-                                </button>
+                                    <button type="button" class="btn btn-secondary" onclick="window.print()">
+                                        <i class="fas fa-print"></i> Print Label
+                                    </button>
+                                    <form method="POST" action="/admin/gemstones/<%= gemstone.id %>/regenerate-qr" style="display: inline;">
+                                        <button type="submit" class="btn btn-secondary" onclick="return confirm('Regenerate QR?');" title="Regenerate">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
-                            <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(107, 70, 193, 0.05); border-radius: 8px; font-size: 0.875rem; color: var(--gray-600);">
-                                <i class="fas fa-info-circle" style="margin-right: 0.5rem; color: var(--purple);"></i>
-                                Scan this QR code to view the product details page. The QR code automatically tracks scans.
+                            <div style="max-width: 500px; text-align: center; font-size: 0.8125rem; color: #718096; line-height: 1.6;">
+                                <i class="fas fa-info-circle" style="color: var(--admin-gold);"></i> This QR code links directly to the public product page. It includes tracking logic to monitor customer engagement from physical scans.
                             </div>
                         </div>
                     </div>
                 </div>
             <% } else if (gemstone) { %>
-                <div class="row" style="margin-top: 2rem;">
-                    <div class="col-12">
-                        <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--gray-200);">
-                            <i class="fas fa-qrcode" style="color: var(--purple); margin-right: 0.5rem;"></i>
+                <div class="dashboard-row" style="margin-top: 2rem;">
+                    <div class="dashboard-col dashboard-col-12">
+                        <h3 style="margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--admin-gold); font-family: 'Playfair Display', serif;">
+                            <i class="fas fa-qrcode" style="color: var(--admin-gold); margin-right: 0.5rem;"></i>
                             QR Code
                         </h3>
-                        <div style="text-align: center; padding: 2rem; background: var(--gray-50); border-radius: var(--radius-lg); border: 2px dashed var(--gray-300);">
-                            <i class="fas fa-qrcode" style="font-size: 3rem; color: var(--gray-400); margin-bottom: 1rem;"></i>
-                            <p style="color: var(--gray-600); margin-bottom: 1rem;">QR code will be generated automatically when you save this gemstone.</p>
+                        <div style="text-align: center; padding: 2rem; background: var(--admin-bg); border-radius: var(--r-lg); border: 2px dashed #cbd5e0;">
+                            <i class="fas fa-qrcode" style="font-size: 3rem; color: #cbd5e0; margin-bottom: 1rem;"></i>
+                            <p style="color: var(--admin-txt); margin-bottom: 1rem;">QR code will be generated automatically when you save this gemstone.</p>
                             <form method="POST" action="/admin/gemstones/<%= gemstone.id %>/regenerate-qr" style="display: inline;">
                                 <button type="submit" class="btn btn-sm btn-primary">
                                     <i class="fas fa-magic" style="margin-right: 0.5rem;"></i>
@@ -225,9 +220,9 @@
                 </div>
             <% } %>
 
-            <div class="d-flex gap-2" style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid var(--gray-200);">
-                <button type="submit" class="btn btn-primary btn-lg">Save Gemstone</button>
-                <a href="/admin/gemstones" class="btn btn-secondary btn-lg">Cancel</a>
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e2e8f0; display: flex; gap: 1rem;">
+                <button type="submit" class="btn btn-primary btn-lg" style="flex: 1; justify-content: center;">Save Gemstone Changes</button>
+                <a href="/admin/gemstones" class="btn btn-secondary btn-lg" style="flex: 0.3; justify-content: center;">Cancel</a>
             </div>
         </div>
     </form>

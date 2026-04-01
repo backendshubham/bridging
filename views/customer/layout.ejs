@@ -2,47 +2,42 @@
 <html lang="en">
 <head>
     <%- include('../partials/head') %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/customer.css">
     <link rel="stylesheet" href="/css/toast.css">
+    <title><%= typeof title !== 'undefined' ? title : 'RatnaVeda - Precious Gems' %></title>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="navbar-content">
-                <a href="/" class="navbar-brand">
-                    <i class="fas fa-gem" style="font-size: 1.5rem; margin-right: 0.5rem; color: #667eea;"></i>
-                    <span>RatnaVeda</span>
-                </a>
-                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <ul class="navbar-nav" id="navbarNav">
-                    <li><a href="/" class="nav-link">Home</a></li>
-                    <li><a href="/catalog" class="nav-link">Catalog</a></li>
-                    <li><a href="/contact" class="nav-link">Contact</a></li>
-                </ul>
-            </div>
-        </div>
+    <nav id="mainNav">
+        <a class="nav-logo" href="/">
+            <div class="nav-logo-gem"></div>
+            Ratna<span>Veda</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="/" id="nav-home" class="<%= typeof currentPage !== 'undefined' && currentPage === 'home' ? 'active' : '' %>">Home</a></li>
+            <li><a href="/catalog" id="nav-catalog" class="<%= typeof currentPage !== 'undefined' && currentPage === 'catalog' ? 'active' : '' %>">Catalog</a></li>
+            <li><a href="/contact" id="nav-contact" class="<%= typeof currentPage !== 'undefined' && currentPage === 'contact' ? 'active' : '' %>">Contact</a></li>
+        </ul>
     </nav>
 
-    <main>
-        <% if (typeof contentFile !== 'undefined') { %>
-            <%- include('./' + contentFile.replace('customer/', '')) %>
-        <% } else if (typeof body !== 'undefined') { %>
-            <%- body %>
-        <% } %>
-    </main>
+    <% if (typeof contentFile !== 'undefined') { %>
+        <%- include('./' + contentFile.replace('customer/', '')) %>
+    <% } else if (typeof body !== 'undefined') { %>
+        <%- body %>
+    <% } %>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>RatnaVeda</h4>
-                    <p>Next-Gen Gemstone Inventory & QR Discovery System</p>
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a class="nav-logo" href="/" style="color: #fff; margin-bottom: 16px;">
+                        <div class="nav-logo-gem"></div>
+                        Ratna<span>Veda</span>
+                    </a>
+                    <p>Next-Gen Gemstone Inventory & QR Discovery System. Bringing authenticity and transparency to the world of precious gems.</p>
                 </div>
-                <div class="footer-section">
+                <div class="footer-col">
                     <h4>Quick Links</h4>
                     <ul>
                         <li><a href="/catalog">Browse Catalog</a></li>
@@ -50,51 +45,24 @@
                         <li><a href="/terms-conditions">Terms & Conditions</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
+                <div class="footer-col">
                     <h4>Contact</h4>
-                    <p>Visit our store to see these gemstones in person</p>
                     <ul>
+                        <li><a href="/contact">Visit our store to see gemstones in person</a></li>
                         <li><a href="/contact">Contact Us</a></li>
+                        <li><a href="mailto:info@ratnaveda.com">info@ratnaveda.com</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; <%= new Date().getFullYear() %> RatnaVeda. All rights reserved.</p>
-            </div>
+            <div class="footer-bottom">© <%= new Date().getFullYear() %> RatnaVeda. All rights reserved. Crafted with ✦ for gem lovers.</div>
         </div>
     </footer>
 
     <script src="/js/customer.js"></script>
     <script src="/js/toast.js"></script>
     <script>
-        // Mobile menu toggle
-        document.addEventListener('DOMContentLoaded', function() {
-            const menuToggle = document.getElementById('mobileMenuToggle');
-            const navbarNav = document.getElementById('navbarNav');
-
-            if (menuToggle && navbarNav) {
-                menuToggle.addEventListener('click', function() {
-                    navbarNav.classList.toggle('active');
-                    menuToggle.classList.toggle('active');
-                });
-
-                // Close menu when clicking on a link
-                const navLinks = navbarNav.querySelectorAll('.nav-link');
-                navLinks.forEach(link => {
-                    link.addEventListener('click', function() {
-                        navbarNav.classList.remove('active');
-                        menuToggle.classList.remove('active');
-                    });
-                });
-
-                // Close menu when clicking outside
-                document.addEventListener('click', function(e) {
-                    if (!menuToggle.contains(e.target) && !navbarNav.contains(e.target)) {
-                        navbarNav.classList.remove('active');
-                        menuToggle.classList.remove('active');
-                    }
-                });
-            }
+        window.addEventListener('scroll', () => {
+            document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 10);
         });
     </script>
 </body>

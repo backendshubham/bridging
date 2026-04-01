@@ -1,218 +1,235 @@
-<!-- Hero Section -->
-<section class="hero-modern">
-    <div class="hero-background">
-        <div class="hero-shapes"></div>
-    </div>
-    <div class="container">
+<div class="page active" id="page-home">
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-particles" id="particles"></div>
         <div class="hero-content">
-            <div class="hero-text">
-                <h1 class="hero-title">
-                    <span class="title-line">Discovering</span>
-                    <span class="title-line title-accent">Precious Gems</span>
-                </h1>
-                <p class="hero-description">
-                    Explore our curated collection of certified gemstones. Each piece is authenticated, 
-                    beautifully crafted, and ready to become part of your story.
-                </p>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <i class="fas fa-gem" style="font-size: 2rem; color: #f59e0b; margin-bottom: 0.75rem;"></i>
-                        <div class="stat-number">500+</div>
-                        <div class="stat-label">Gemstones</div>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-certificate" style="font-size: 2rem; color: #6366f1; margin-bottom: 0.75rem;"></i>
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">Certified</div>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-headset" style="font-size: 2rem; color: #10b981; margin-bottom: 0.75rem;"></i>
-                        <div class="stat-number">24/7</div>
-                        <div class="stat-label">Support</div>
-                    </div>
-                </div>
+            <div class="hero-left">
+                <div class="hero-eyebrow">Certified Precious Gemstones</div>
+                <h1 class="hero-h1">Discovering<br><em>Precious</em><br><span class="hero-h1-sub">Gems of India</span></h1>
+                <p class="hero-desc">Explore our curated collection of authenticated, beautifully crafted gemstones. Each piece comes with professional certification, ready to become part of your story.</p>
                 <div class="hero-actions">
-                    <a href="/catalog" class="btn btn-primary btn-large">Browse Collection</a>
-                    <a href="#about" class="btn btn-outline btn-large">Learn More</a>
+                    <a class="btn btn-primary" href="/catalog">✦ Browse Collection</a>
+                    <a class="btn btn-outline" href="#why" style="color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.25);">Learn More</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat"><div class="num">500+</div><div class="lbl">Gemstones</div></div>
+                    <div class="hero-stat"><div class="num">100%</div><div class="lbl">Certified</div></div>
+                    <div class="hero-stat"><div class="num">24/7</div><div class="lbl">Support</div></div>
+                    <div class="hero-stat"><div class="num">12+</div><div class="lbl">Gem Types</div></div>
                 </div>
             </div>
-            <div class="hero-visual">
-                <div class="gemstone-showcase">
-                    <div class="gem-card gem-card-1">
-                        <div class="gem-icon"><i class="fas fa-gem"></i></div>
-                        <div class="gem-label">Diamonds</div>
-                    </div>
-                    <div class="gem-card gem-card-2">
-                        <div class="gem-icon"><i class="fas fa-circle" style="color: #ef4444;"></i></div>
-                        <div class="gem-label">Rubies</div>
-                    </div>
-                    <div class="gem-card gem-card-3">
-                        <div class="gem-icon"><i class="fas fa-circle" style="color: #3b82f6;"></i></div>
-                        <div class="gem-label">Sapphires</div>
-                    </div>
-                    <div class="gem-card gem-card-4">
-                        <div class="gem-icon"><i class="fas fa-circle" style="color: #10b981;"></i></div>
-                        <div class="gem-label">Emeralds</div>
-                    </div>
+            <div class="hero-right">
+                <div class="gem-card" onclick="window.location.href='/catalog?type=Heera'">
+                    <div class="gem-icon" style="background:linear-gradient(135deg,rgba(232,200,122,.2),rgba(201,152,58,.1))">💎</div>
+                    <div class="gem-name">Diamonds</div>
+                    <div class="gem-tag">Heera</div>
+                </div>
+                <div class="gem-card" onclick="window.location.href='/catalog?type=Manik'">
+                    <div class="gem-icon" style="background:linear-gradient(135deg,rgba(168,36,58,.15),rgba(168,36,58,.05))">❤️</div>
+                    <div class="gem-name">Rubies</div>
+                    <div class="gem-tag">Manik</div>
+                </div>
+                <div class="gem-card" onclick="window.location.href='/catalog?type=Neelam'">
+                    <div class="gem-icon" style="background:linear-gradient(135deg,rgba(28,58,138,.15),rgba(28,58,138,.05))">💙</div>
+                    <div class="gem-name">Sapphires</div>
+                    <div class="gem-tag">Neelam</div>
+                </div>
+                <div class="gem-card" onclick="window.location.href='/catalog?type=Panna'">
+                    <div class="gem-icon" style="background:linear-gradient(135deg,rgba(13,107,80,.15),rgba(13,107,80,.05))">💚</div>
+                    <div class="gem-name">Emeralds</div>
+                    <div class="gem-tag">Panna</div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Features Section -->
-<section class="features-section" id="about">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">Why Choose RatnaVeda</h2>
-            <p class="section-subtitle">Experience the finest in gemstone collection</p>
-        </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-certificate"></i></div>
-                <h3 class="feature-title">Certified Authenticity</h3>
-                <p class="feature-description">Every gemstone comes with professional certification from recognized laboratories.</p>
+    <!-- WHY CHOOSE -->
+    <section class="why-section" id="why">
+        <div class="why-inner">
+            <div class="why-header">
+                <div class="section-eyebrow">Why RatnaVeda</div>
+                <h2 class="section-title">Why Choose RatnaVeda</h2>
+                <p class="section-sub">Experience the finest in gemstone collection — authenticated, transparent, and trusted</p>
             </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-qrcode"></i></div>
-                <h3 class="feature-title">QR Code Discovery</h3>
-                <p class="feature-description">Scan QR codes to instantly access detailed information about each gemstone.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-search"></i></div>
-                <h3 class="feature-title">Detailed Specifications</h3>
-                <p class="feature-description">Complete transparency with carat weight, clarity, cut, and origin information.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon"><i class="fas fa-briefcase"></i></div>
-                <h3 class="feature-title">Professional Service</h3>
-                <p class="feature-description">Expert guidance and support throughout your gemstone journey.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Catalog Preview -->
-<section class="catalog-preview">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">Featured Collection</h2>
-            <p class="section-subtitle">Handpicked gems from our inventory</p>
-            <a href="/catalog" class="btn btn-outline">View All →</a>
-        </div>
-    </div>
-</section>
-
-<!-- Process Section -->
-<section class="process-section">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">How It Works</h2>
-            <p class="section-subtitle">Simple steps to find your perfect gemstone</p>
-        </div>
-        <div class="process-grid">
-            <div class="process-step">
-                <div class="process-number">01</div>
-                <div class="process-icon"><i class="fas fa-search"></i></div>
-                <h3 class="process-title">Browse Collection</h3>
-                <p class="process-description">Explore our extensive catalog of certified gemstones with detailed specifications and high-quality images.</p>
-            </div>
-            <div class="process-step">
-                <div class="process-number">02</div>
-                <div class="process-icon"><i class="fas fa-qrcode"></i></div>
-                <h3 class="process-title">Scan QR Code</h3>
-                <p class="process-description">Use our QR code system to instantly access comprehensive information about any gemstone in our collection.</p>
-            </div>
-            <div class="process-step">
-                <div class="process-number">03</div>
-                <div class="process-icon"><i class="fas fa-certificate"></i></div>
-                <h3 class="process-title">Verify Certification</h3>
-                <p class="process-description">Review authentic certification documents from recognized laboratories for complete peace of mind.</p>
-            </div>
-            <div class="process-step">
-                <div class="process-number">04</div>
-                <div class="process-icon"><i class="fas fa-handshake"></i></div>
-                <h3 class="process-title">Make Your Choice</h3>
-                <p class="process-description">Connect with our experts to finalize your selection and complete your purchase with confidence.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Testimonials Section -->
-<section class="testimonials-section">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">What Our Customers Say</h2>
-            <p class="section-subtitle">Trusted by gemstone enthusiasts worldwide</p>
-        </div>
-        <div class="testimonials-grid">
-            <div class="testimonial-card">
-                <div class="testimonial-rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
+            <div class="why-grid">
+                <div class="why-card">
+                    <div class="why-icon">🏆</div>
+                    <h3>Certified Authenticity</h3>
+                    <p>Every gemstone comes with professional certification from recognized laboratories like GIA, IGI and more.</p>
                 </div>
-                <p class="testimonial-text">"The QR code feature is brilliant! I could instantly verify all the details of my gemstone purchase. Truly innovative and trustworthy."</p>
-                <div class="testimonial-author">
-                    <div class="author-avatar"><i class="fas fa-user"></i></div>
-                    <div class="author-info">
-                        <div class="author-name">Priya Sharma</div>
-                        <div class="author-role">Verified Customer</div>
+                <div class="why-card">
+                    <div class="why-icon">📱</div>
+                    <h3>QR Code Discovery</h3>
+                    <p>Scan QR codes to instantly access detailed information about each gemstone's origin and quality.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">🔍</div>
+                    <h3>Detailed Specifications</h3>
+                    <p>Complete transparency with carat weight, clarity, cut, color grade, and origin information.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">👑</div>
+                    <h3>Professional Service</h3>
+                    <p>Expert guidance and support throughout your gemstone journey from selection to purchase.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURED -->
+    <section class="featured-section">
+        <div class="featured-inner">
+            <div class="featured-header">
+                <div class="section-eyebrow">Handpicked Gems</div>
+                <h2 class="section-title">Featured Collection</h2>
+                <p class="section-sub">Carefully selected gems from our exclusive inventory</p>
+            </div>
+            <div class="view-all-wrap">
+                <a class="btn btn-outline" href="/catalog">View All Collection →</a>
+            </div>
+            <div class="featured-grid">
+                <div class="feat-card" onclick="window.location.href='/product/2340001'">
+                    <div class="feat-img bg-ruby gem-shimmer">❤️🔥</div>
+                    <div class="feat-body">
+                        <div class="feat-tags">
+                            <span class="tag tag-type">Manik</span>
+                            <span class="tag tag-cert">GIA Certified</span>
+                        </div>
+                        <div class="feat-name">Burmese Star Ruby</div>
+                        <div class="feat-specs">5.20 ct · Deep Red · VS Clarity</div>
+                        <div class="feat-price">₹1,24,800 <span>per piece</span></div>
                     </div>
                 </div>
-            </div>
-            <div class="testimonial-card">
-                <div class="testimonial-rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <p class="testimonial-text">"Exceptional quality and transparency. Every gemstone comes with proper certification, and the detailed specifications help make informed decisions."</p>
-                <div class="testimonial-author">
-                    <div class="author-avatar"><i class="fas fa-user"></i></div>
-                    <div class="author-info">
-                        <div class="author-name">Rajesh Kumar</div>
-                        <div class="author-role">Gemstone Collector</div>
+                <div class="feat-card" onclick="window.location.href='/product/2340002'">
+                    <div class="feat-img bg-sapphire gem-shimmer">💙</div>
+                    <div class="feat-body">
+                        <div class="feat-tags">
+                            <span class="tag tag-type">Neelam</span>
+                            <span class="tag tag-cert">IGI Certified</span>
+                        </div>
+                        <div class="feat-name">Kashmir Blue Sapphire</div>
+                        <div class="feat-specs">3.85 ct · Royal Blue · VVS1</div>
+                        <div class="feat-price">₹2,31,000 <span>per piece</span></div>
                     </div>
                 </div>
-            </div>
-            <div class="testimonial-card">
-                <div class="testimonial-rating">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                </div>
-                <p class="testimonial-text">"Professional service and authentic gemstones. The team guided me through the entire process, and I'm extremely satisfied with my purchase."</p>
-                <div class="testimonial-author">
-                    <div class="author-avatar"><i class="fas fa-user"></i></div>
-                    <div class="author-info">
-                        <div class="author-name">Anita Patel</div>
-                        <div class="author-role">Jewelry Designer</div>
+                <div class="feat-card" onclick="window.location.href='/product/2340003'">
+                    <div class="feat-img bg-emerald gem-shimmer">💚</div>
+                    <div class="feat-body">
+                        <div class="feat-tags">
+                            <span class="tag tag-type">Panna</span>
+                            <span class="tag tag-cert">GIA Certified</span>
+                        </div>
+                        <div class="feat-name">Colombian Emerald</div>
+                        <div class="feat-specs">4.10 ct · Vivid Green · F1</div>
+                        <div class="feat-price">₹1,87,500 <span>per piece</span></div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- CTA Section -->
-<section class="cta-section">
-    <div class="container">
-        <div class="cta-content">
-            <h2 class="cta-title">Ready to Explore Our Collection?</h2>
-            <p class="cta-description">Discover authentic, certified gemstones with complete transparency and professional service.</p>
+    <!-- HOW IT WORKS -->
+    <section class="how-section">
+        <div class="how-inner">
+            <div class="how-header">
+                <div class="section-eyebrow">Simple Process</div>
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-sub">Four simple steps to find your perfect gemstone</p>
+            </div>
+            <div class="how-steps">
+                <div class="how-step">
+                    <div class="step-num">01<div class="step-icon">🔍</div></div>
+                    <h3>Browse Collection</h3>
+                    <p>Explore our extensive catalog of certified gemstones with detailed specifications and high-quality images.</p>
+                </div>
+                <div class="how-step">
+                    <div class="step-num">02<div class="step-icon">📱</div></div>
+                    <h3>Scan QR Code</h3>
+                    <p>Use our QR code system to instantly access comprehensive information about any gemstone.</p>
+                </div>
+                <div class="how-step">
+                    <div class="step-num">03<div class="step-icon">✅</div></div>
+                    <h3>Verify Certification</h3>
+                    <p>Review authentic certification documents from recognized laboratories for complete peace of mind.</p>
+                </div>
+                <div class="how-step">
+                    <div class="step-num">04<div class="step-icon">💎</div></div>
+                    <h3>Make Your Choice</h3>
+                    <p>Connect with our experts to finalize your selection and complete your purchase with confidence.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testi-section">
+        <div class="testi-inner">
+            <div class="testi-header">
+                <div class="section-eyebrow">Customer Stories</div>
+                <h2 class="section-title">What Our Customers Say</h2>
+                <p class="section-sub">Trusted by gemstone enthusiasts across India and worldwide</p>
+            </div>
+            <div class="testi-grid">
+                <div class="testi-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="testi-quote">"The QR code feature is brilliant! I could instantly verify all the details of my gemstone purchase. Truly innovative and trustworthy."</p>
+                    <div class="testi-author">
+                        <div class="testi-avatar">P</div>
+                        <div><div class="testi-name">Priya Sharma</div><div class="testi-role">Verified Customer</div></div>
+                    </div>
+                </div>
+                <div class="testi-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="testi-quote">"Exceptional quality and transparency. Every gemstone comes with proper certification, and the detailed specifications help me make informed decisions."</p>
+                    <div class="testi-author">
+                        <div class="testi-avatar">R</div>
+                        <div><div class="testi-name">Rajesh Kumar</div><div class="testi-role">Gemstone Collector</div></div>
+                    </div>
+                </div>
+                <div class="testi-card">
+                    <div class="stars">★★★★☆</div>
+                    <p class="testi-quote">"Professional service and authentic gemstones. The team guided me through the entire process. I'm extremely satisfied with my purchase."</p>
+                    <div class="testi-author">
+                        <div class="testi-avatar">A</div>
+                        <div><div class="testi-name">Anita Patel</div><div class="testi-role">Jewelry Designer</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="cta-inner">
+            <div class="section-eyebrow">Get Started Today</div>
+            <h2 class="section-title">Ready to Explore Our Collection?</h2>
+            <p class="section-sub">Discover authentic, certified gemstones with complete transparency and professional service. Your perfect gem awaits.</p>
             <div class="cta-actions">
-                <a href="/catalog" class="btn btn-primary btn-large">Browse Catalog</a>
-                <a href="/contact" class="btn btn-outline btn-large">Contact Us</a>
+                <a class="btn btn-primary" href="/catalog">✦ Browse Catalog</a>
+                <a class="btn btn-outline" href="/contact">Contact Us</a>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</div>
+
+<script>
+function initParticles() {
+  const container = document.getElementById('particles');
+  if (!container) return;
+  container.innerHTML = '';
+  for (let i = 0; i < 22; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 6 + 2;
+    p.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}%; top:${Math.random()*100}%;
+      --d:${Math.random()*4+4}s; --delay:${Math.random()*4}s;
+      --ty:${-(Math.random()*40+20)}px; --op:${Math.random()*.4+.1};
+    `;
+    container.appendChild(p);
+  }
+}
+document.addEventListener('DOMContentLoaded', initParticles);
+</script>
 

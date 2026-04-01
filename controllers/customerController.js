@@ -68,10 +68,11 @@ const catalog = async (req, res) => {
     const limit = 10;
     const offset = (page - 1) * limit;
     
-    const gemstones = await query
-      .orderBy('gemstones.created_at', 'desc')
-      .limit(limit)
-      .offset(offset);
+    const gemstones = await db('gemstones')
+      .leftJoin('categories', 'gemstones.category_id', 'categories.id')
+      .select('gemstones.*', 'categories.name as category_name', 'categories.slug as category_slug')
+      .where('gemstones.is_active', true)
+      .orderBy('gemstones.created_at', 'desc');
     
     const categories = await db('categories').where({ is_active: true }).orderBy('name');
     const ratnaTypes = await db('gemstones')
@@ -80,40 +81,13 @@ const catalog = async (req, res) => {
       .pluck('ratna_type')
       .orderBy('ratna_type');
     
-    const maxCarat = await db('gemstones')
-      .where({ is_active: true })
-      .max('carat_weight as max')
-      .first();
-    
-    const maxPrice = await db('gemstones')
-      .where({ is_active: true })
-      .max('final_price as max')
-      .first();
-    
     res.render('customer/catalog', {
       title: 'Gemstone Catalog',
       contentFile: 'customer/catalog-content',
+      currentPage: 'catalog',
       gemstones,
       categories,
-      ratnaTypes,
-      pagination: {
-        page,
-        limit,
-        total,
-        pages: Math.ceil(total / limit),
-        hasMore: page * limit < total
-      },
-      filters: {
-        carat_min: carat_min || '',
-        carat_max: carat_max || '',
-        price_min: price_min || '',
-        price_max: price_max || '',
-        type: type || '',
-        category: category || '',
-        search: search || ''
-      },
-      maxCarat: maxCarat?.max || 10,
-      maxPrice: maxPrice?.max || 1000000
+      ratnaTypes
     });
   } catch (error) {
     console.error('Catalog error:', error);
@@ -180,6 +154,7 @@ const product = async (req, res) => {
     res.render('customer/product', {
       title: gemstone.name,
       contentFile: 'customer/product-content',
+      currentPage: 'catalog',
       gemstone
     });
   } catch (error) {
@@ -219,6 +194,7 @@ const contact = async (req, res) => {
     res.render('customer/contact', {
       title: 'Contact Us',
       contentFile: 'customer/contact-content',
+      currentPage: 'contact',
       settings: settingsObj,
       googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY || ''
     });

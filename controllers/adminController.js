@@ -8,7 +8,10 @@ const login = async (req, res) => {
     const { username, password } = req.body;
     
     const admin = await db('admins')
-      .where({ username, is_active: true })
+      .where(function() {
+        this.where({ username }).orWhere({ email: username });
+      })
+      .where({ is_active: true })
       .first();
     
     if (!admin) {

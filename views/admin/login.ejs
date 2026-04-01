@@ -139,30 +139,31 @@
         (function() {
             // Wait for toast to be available
             function initLogin() {
+                const usernameField = document.getElementById('username');
+                const passwordField = document.getElementById('password');
+                const loginForm = document.getElementById('loginForm');
+                const submitBtn = document.getElementById('submitBtn');
+                const btnText = document.getElementById('btnText');
+                const btnLoader = document.getElementById('btnLoader');
+
                 // Check for error from server-side render
                 <% if (typeof error !== 'undefined' && error) { %>
                     if (typeof toast !== 'undefined') {
                         toast.error('<%= error %>', 'Login Failed');
                     }
                     // Clear form inputs on error
-                    const usernameField = document.getElementById('username');
-                    const passwordField = document.getElementById('password');
                     if (usernameField) usernameField.value = '';
                     if (passwordField) passwordField.value = '';
                     if (usernameField) usernameField.focus();
                 <% } %>
 
                 // Handle form submission
-                const loginForm = document.getElementById('loginForm');
                 if (loginForm) {
-                    const submitBtn = document.getElementById('submitBtn');
-                    const btnText = document.getElementById('btnText');
-                    const btnLoader = document.getElementById('btnLoader');
 
                     loginForm.addEventListener('submit', function(e) {
                         // Validate form before submission
-                        const username = document.getElementById('username').value.trim();
-                        const password = document.getElementById('password').value.trim();
+                        const username = usernameField ? usernameField.value.trim() : '';
+                        const password = passwordField ? passwordField.value.trim() : '';
                         
                         if (!username || !password) {
                             e.preventDefault();
@@ -182,7 +183,6 @@
                 }
 
                 // Auto-focus username if empty
-                const usernameField = document.getElementById('username');
                 if (usernameField && !usernameField.value) {
                     usernameField.focus();
                 }

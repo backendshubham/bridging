@@ -246,17 +246,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 datasets: [{
                     label: 'Sales (₹)',
                     data: [120000, 190000, 150000, 250000, 220000, 300000, 280000, 320000, 290000, 350000, 330000, 400000],
-                    borderColor: 'rgb(102, 126, 234)',
-                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    borderColor: '#C9983A',
+                    backgroundColor: 'rgba(201, 152, 58, 0.1)',
                     tension: 0.4,
-                    fill: true
+                    fill: true,
+                    pointBackgroundColor: '#C9983A',
+                    pointBorderColor: '#fff',
+                    pointRadius: 4,
+                    pointHoverRadius: 6
                 }, {
                     label: 'Views',
                     data: [120, 190, 150, 250, 220, 300, 280, 320, 290, 350, 330, 400],
-                    borderColor: 'rgb(16, 185, 129)',
-                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    borderColor: '#1A1632',
+                    backgroundColor: 'rgba(26, 22, 50, 0.1)',
                     tension: 0.4,
-                    fill: true
+                    fill: true,
+                    pointBackgroundColor: '#1A1632',
+                    pointBorderColor: '#fff',
+                    pointRadius: 4,
+                    pointHoverRadius: 6
                 }]
             },
             options: {
@@ -265,18 +273,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 plugins: {
                     legend: {
                         position: 'top',
+                        labels: {
+                            font: { family: 'Inter', weight: '600' },
+                            usePointStyle: true,
+                            padding: 20
+                        }
                     }
                 },
                 scales: {
                     y: {
                         beginAtZero: true,
                         grid: {
-                            color: 'rgba(0, 0, 0, 0.05)'
+                            color: 'rgba(0, 0, 0, 0.03)',
+                            drawBorder: false
+                        },
+                        ticks: {
+                            font: { family: 'Inter' },
+                            color: '#718096'
                         }
                     },
                     x: {
                         grid: {
                             display: false
+                        },
+                        ticks: {
+                            font: { family: 'Inter' },
+                            color: '#718096'
                         }
                     }
                 }
@@ -294,20 +316,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 datasets: [{
                     data: [35, 25, 20, 15, 5],
                     backgroundColor: [
-                        'rgb(102, 126, 234)',
-                        'rgb(239, 68, 68)',
-                        'rgb(59, 130, 246)',
-                        'rgb(16, 185, 129)',
-                        'rgb(156, 163, 175)'
-                    ]
+                        '#1A1632', // Ink (Diamond replacement for color)
+                        '#A8243A', // Ruby
+                        '#1C3A8A', // Sapphire
+                        '#0D6B50', // Emerald
+                        '#C9983A'  // Gold
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 12
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                cutout: '75%',
                 plugins: {
                     legend: {
                         position: 'bottom',
+                        labels: {
+                            font: { family: 'Inter', weight: '600' },
+                            padding: 20,
+                            usePointStyle: true
+                        }
                     }
                 }
             }

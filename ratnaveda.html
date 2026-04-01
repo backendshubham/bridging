@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RatnaVeda — Precious Gems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink:       #0B0C1A;
+    --ink2:      #1A1B30;
+    --gold:      #C9983A;
+    --gold-lt:   #E8C87A;
+    --cream:     #FAF6EE;
+    --cream2:    #F2EDE3;
+    --ruby:      #A8243A;
+    --emerald:   #0D6B50;
+    --sapphire:  #1C3A8A;
+    --amethyst:  #6B3FA0;
+    --txt:       #2A2B3D;
+    --txt-lt:    #6B6D85;
+    --white:     #FFFFFF;
+    --card-bg:   rgba(255,255,255,0.72);
+    --glass:     rgba(255,255,255,0.12);
+    --r-sm: 12px;
+    --r-md: 20px;
+    --r-lg: 32px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    color: var(--txt);
+    background: var(--cream);
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    height: 72px;
+    background: rgba(250,246,238,0.88);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(201,152,58,0.18);
+    transition: box-shadow .3s;
+  }
+  nav.scrolled { box-shadow: 0 4px 40px rgba(11,12,26,0.1); }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .nav-logo-gem {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-lt) 100%);
+    clip-path: polygon(50% 0%, 100% 35%, 75% 100%, 25% 100%, 0% 35%);
+    flex-shrink: 0;
+  }
+  .nav-logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; font-size: .95rem; font-weight: 500;
+    color: var(--txt-lt); letter-spacing: .04em; transition: color .2s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+    height: 2px; background: var(--gold); transform: scaleX(0); transition: transform .25s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--ink); }
+  .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+
+  /* ─── PAGES ─── */
+  .page { display: none; min-height: 100vh; padding-top: 72px; }
+  .page.active { display: block; animation: fadeIn .45s ease; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+
+  /* ─── BUTTONS ─── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 30px; border-radius: 50px; font-family: 'Jost', sans-serif;
+    font-size: .93rem; font-weight: 600; letter-spacing: .06em;
+    text-transform: uppercase; cursor: pointer; border: none;
+    text-decoration: none; transition: all .28s cubic-bezier(.4,0,.2,1);
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold) 0%, #A8762B 100%);
+    color: #fff; box-shadow: 0 8px 28px rgba(201,152,58,.4);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(201,152,58,.5); }
+  .btn-outline {
+    background: transparent;
+    border: 1.5px solid var(--gold); color: var(--gold);
+  }
+  .btn-outline:hover { background: var(--gold); color: #fff; }
+  .btn-white {
+    background: #fff; color: var(--ink); box-shadow: 0 4px 20px rgba(0,0,0,.12);
+  }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,.18); }
+
+  /* ─── SECTION LABEL ─── */
+  .section-eyebrow {
+    display: inline-block; font-size: .75rem; font-weight: 600;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 14px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem); font-weight: 700;
+    color: var(--ink); line-height: 1.18; letter-spacing: -.02em;
+  }
+  .section-sub {
+    font-size: 1rem; color: var(--txt-lt); font-weight: 300;
+    line-height: 1.7; margin-top: 12px;
+  }
+  .center { text-align: center; }
+
+  /* ══════════════════════════════════════════
+       PAGE 1 — HOME
+  ══════════════════════════════════════════ */
+
+  /* HERO */
+  .hero {
+    position: relative; overflow: hidden;
+    min-height: calc(100vh - 72px);
+    display: flex; align-items: center;
+    background: linear-gradient(135deg, #0B0C1A 0%, #1A1632 55%, #2B1A3A 100%);
+  }
+  .hero-particles { position: absolute; inset: 0; pointer-events: none; }
+  .particle {
+    position: absolute; border-radius: 50%;
+    background: var(--gold);
+    animation: float var(--d,6s) var(--delay,0s) infinite ease-in-out;
+    opacity: var(--op,.4);
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0) rotate(0); opacity: var(--op,.4); }
+    50% { transform: translateY(var(--ty,-30px)) rotate(180deg); opacity: calc(var(--op,.4)*1.6); }
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 1200px; margin: 0 auto; padding: 80px 5vw;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  }
+  .hero-left { }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(201,152,58,.12); border: 1px solid rgba(201,152,58,.3);
+    border-radius: 50px; padding: 6px 18px;
+    font-size: .78rem; font-weight: 600; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--gold-lt); margin-bottom: 28px;
+  }
+  .hero-eyebrow::before { content: '✦'; font-size: .7rem; }
+  .hero-h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+    font-weight: 700; line-height: 1.08; color: #fff;
+    letter-spacing: -.03em; margin-bottom: 10px;
+  }
+  .hero-h1 em { font-style: italic; color: var(--gold-lt); }
+  .hero-h1-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.5rem, 3vw, 2.4rem); font-weight: 300;
+    color: rgba(255,255,255,.55); letter-spacing: .02em; line-height: 1.3;
+  }
+  .hero-desc {
+    font-size: .98rem; color: rgba(255,255,255,.6);
+    line-height: 1.8; margin: 24px 0 40px; max-width: 420px;
+  }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+  .hero-stats {
+    display: flex; gap: 32px; margin-top: 52px; padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,.1);
+  }
+  .hero-stat .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem; font-weight: 700; color: var(--gold-lt);
+  }
+  .hero-stat .lbl { font-size: .78rem; color: rgba(255,255,255,.45); letter-spacing: .08em; text-transform: uppercase; }
+
+  /* gem grid */
+  .hero-right { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .gem-card {
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: var(--r-md);
+    padding: 28px 20px; text-align: center;
+    backdrop-filter: blur(12px);
+    cursor: pointer;
+    transition: all .3s cubic-bezier(.4,0,.2,1);
+    animation: cardIn .6s ease both;
+  }
+  .gem-card:hover { background: rgba(255,255,255,.13); transform: translateY(-6px); border-color: rgba(201,152,58,.4); }
+  @keyframes cardIn { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:none; } }
+  .gem-card:nth-child(1) { animation-delay:.1s; }
+  .gem-card:nth-child(2) { animation-delay:.2s; }
+  .gem-card:nth-child(3) { animation-delay:.3s; }
+  .gem-card:nth-child(4) { animation-delay:.4s; }
+  .gem-icon {
+    width: 56px; height: 56px; border-radius: 16px; margin: 0 auto 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem;
+  }
+  .gem-card .gem-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: #fff; font-weight: 600; }
+  .gem-card .gem-tag { font-size: .73rem; color: rgba(255,255,255,.4); letter-spacing: .06em; text-transform: uppercase; margin-top: 4px; }
+
+  /* WHY CHOOSE */
+  .why-section { padding: 100px 5vw; background: var(--cream); }
+  .why-inner { max-width: 1200px; margin: 0 auto; }
+  .why-header { text-align: center; margin-bottom: 64px; }
+  .why-grid {
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 24px;
+  }
+  .why-card {
+    background: #fff; border-radius: var(--r-md);
+    padding: 36px 24px; text-align: center;
+    border: 1px solid rgba(201,152,58,.1);
+    box-shadow: 0 2px 20px rgba(11,12,26,.05);
+    transition: all .3s;
+    position: relative; overflow: hidden;
+  }
+  .why-card::before {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold-lt));
+    transform: scaleX(0); transition: transform .3s; transform-origin: left;
+  }
+  .why-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(11,12,26,.1); }
+  .why-card:hover::before { transform: scaleX(1); }
+  .why-icon {
+    width: 64px; height: 64px; border-radius: 18px; margin: 0 auto 20px;
+    display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
+    background: linear-gradient(135deg, rgba(201,152,58,.1) 0%, rgba(201,152,58,.05) 100%);
+  }
+  .why-card h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--ink); margin-bottom: 10px; }
+  .why-card p { font-size: .88rem; color: var(--txt-lt); line-height: 1.7; }
+
+  /* FEATURED */
+  .featured-section { padding: 100px 5vw; background: var(--cream2); }
+  .featured-inner { max-width: 1200px; margin: 0 auto; }
+  .featured-header { text-align: center; margin-bottom: 16px; }
+  .view-all-wrap { text-align: center; margin: 20px 0 56px; }
+  .featured-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
+  .feat-card {
+    background: #fff; border-radius: var(--r-md); overflow: hidden;
+    box-shadow: 0 4px 24px rgba(11,12,26,.07);
+    transition: all .3s; cursor: pointer;
+    border: 1px solid rgba(201,152,58,.08);
+  }
+  .feat-card:hover { transform: translateY(-8px); box-shadow: 0 20px 48px rgba(11,12,26,.14); }
+  .feat-img {
+    height: 220px; display: flex; align-items: center; justify-content: center;
+    font-size: 4rem; position: relative; overflow: hidden;
+  }
+  .feat-body { padding: 22px 22px 24px; }
+  .feat-tags { display: flex; gap: 8px; margin-bottom: 10px; }
+  .tag {
+    font-size: .72rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 50px;
+  }
+  .tag-type { background: rgba(28,58,138,.08); color: var(--sapphire); }
+  .tag-cert { background: rgba(13,107,80,.08); color: var(--emerald); }
+  .feat-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--ink); margin-bottom: 6px; }
+  .feat-specs { font-size: .84rem; color: var(--txt-lt); margin-bottom: 14px; }
+  .feat-price { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--ink); font-weight: 700; }
+  .feat-price span { font-size: .82rem; font-weight: 400; color: var(--txt-lt); font-family: 'Jost', sans-serif; }
+
+  /* HOW IT WORKS */
+  .how-section { padding: 100px 5vw; background: var(--cream); }
+  .how-inner { max-width: 1100px; margin: 0 auto; }
+  .how-header { text-align: center; margin-bottom: 72px; }
+  .how-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; position: relative; }
+  .how-steps::before {
+    content: ''; position: absolute; top: 40px; left: 12.5%; right: 12.5%;
+    height: 2px; background: linear-gradient(90deg, transparent, var(--gold), var(--gold), transparent);
+    z-index: 0;
+  }
+  .how-step { text-align: center; padding: 0 16px; position: relative; z-index: 1; }
+  .step-num {
+    width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 24px;
+    background: linear-gradient(135deg, var(--gold) 0%, #A8762B 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: #fff;
+    box-shadow: 0 8px 28px rgba(201,152,58,.4);
+    position: relative;
+  }
+  .step-num .step-icon { font-size: 1.5rem; position: absolute; bottom: -8px; right: -8px;
+    background: #fff; border-radius: 50%; width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center; font-size: .9rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+  }
+  .how-step h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--ink); margin-bottom: 10px; }
+  .how-step p { font-size: .86rem; color: var(--txt-lt); line-height: 1.7; }
+
+  /* TESTIMONIALS */
+  .testi-section {
+    padding: 100px 5vw;
+    background: linear-gradient(160deg, #0D0B1E 0%, #1C1530 50%, #0D1830 100%);
+    position: relative; overflow: hidden;
+  }
+  .testi-section::before {
+    content: ''; position: absolute; top: -200px; right: -200px;
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,152,58,.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .testi-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+  .testi-header { text-align: center; margin-bottom: 60px; }
+  .testi-header .section-title { color: #fff; }
+  .testi-header .section-sub { color: rgba(255,255,255,.45); }
+  .testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+  .testi-card {
+    background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08);
+    border-radius: var(--r-md); padding: 32px;
+    backdrop-filter: blur(12px); transition: all .3s;
+  }
+  .testi-card:hover { background: rgba(255,255,255,.09); transform: translateY(-4px); }
+  .stars { color: var(--gold); font-size: 1rem; letter-spacing: 2px; margin-bottom: 16px; }
+  .testi-quote {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-style: italic;
+    color: rgba(255,255,255,.8); line-height: 1.75; margin-bottom: 24px;
+  }
+  .testi-author { display: flex; align-items: center; gap: 14px; }
+  .testi-avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-lt) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif; font-size: 1rem; color: #fff; font-weight: 700;
+  }
+  .testi-name { font-size: .9rem; font-weight: 600; color: #fff; }
+  .testi-role { font-size: .78rem; color: rgba(255,255,255,.4); }
+
+  /* CTA */
+  .cta-section {
+    padding: 100px 5vw;
+    background: linear-gradient(135deg, #F7EFD8 0%, var(--cream2) 100%);
+    position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: '✦ ❋ ✦'; position: absolute;
+    top: 30px; left: 50%; transform: translateX(-50%);
+    font-size: 1.1rem; color: rgba(201,152,58,.3); letter-spacing: 16px;
+  }
+  .cta-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+  .cta-inner .section-title { font-size: clamp(2rem, 3.5vw, 2.8rem); }
+  .cta-inner .section-sub { margin-bottom: 36px; }
+  .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+  /* ══════════════════════════════════════════
+       PAGE 2 — CATALOG
+  ══════════════════════════════════════════ */
+  .catalog-hero {
+    background: linear-gradient(135deg, #1A1632 0%, #2B1A3A 60%, #1C3A8A 100%);
+    padding: 72px 5vw 64px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .catalog-hero::after {
+    content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
+    height: 60px;
+    background: var(--cream);
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+  .catalog-hero h1 {
+    font-family: 'Playfair Display', serif; font-size: clamp(2.2rem,5vw,3.8rem);
+    font-weight: 700; color: #fff; margin: 16px 0 12px;
+    display: flex; align-items: center; justify-content: center; gap: 16px;
+  }
+  .catalog-hero p { font-size: 1rem; color: rgba(255,255,255,.6); max-width: 560px; margin: 0 auto; }
+
+  .catalog-body { max-width: 1200px; margin: 0 auto; padding: 56px 5vw 100px; display: flex; gap: 36px; }
+
+  /* FILTERS */
+  .filter-panel {
+    width: 260px; flex-shrink: 0;
+    background: #fff; border-radius: var(--r-md);
+    padding: 28px 24px;
+    border: 1px solid rgba(201,152,58,.12);
+    box-shadow: 0 4px 20px rgba(11,12,26,.06);
+    height: fit-content; position: sticky; top: 90px;
+  }
+  .filter-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+  .filter-header h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+  .clear-btn { font-size: .78rem; color: var(--gold); cursor: pointer; font-weight: 600; background: none; border: none; }
+  .filter-group { margin-bottom: 24px; }
+  .filter-label { font-size: .73rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--txt-lt); margin-bottom: 10px; display: block; }
+  .filter-input {
+    width: 100%; padding: 10px 14px; border-radius: 10px;
+    border: 1.5px solid rgba(201,152,58,.2); background: var(--cream);
+    font-family: 'Jost', sans-serif; font-size: .9rem; color: var(--txt);
+    outline: none; transition: border-color .2s;
+  }
+  .filter-input:focus { border-color: var(--gold); }
+  select.filter-input { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M0 0l6 8 6-8z' fill='%23C9983A'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
+
+  /* GEM GRID */
+  .gems-area { flex: 1; min-width: 0; }
+  .gems-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; }
+  .gems-count { font-size: .9rem; color: var(--txt-lt); }
+  .gems-count strong { color: var(--ink); font-weight: 600; }
+  .gems-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px,1fr)); gap: 22px; }
+  .gem-listing-card {
+    background: #fff; border-radius: var(--r-md); overflow: hidden;
+    border: 1px solid rgba(201,152,58,.1);
+    box-shadow: 0 2px 16px rgba(11,12,26,.06);
+    transition: all .3s; cursor: pointer;
+  }
+  .gem-listing-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(11,12,26,.12); border-color: rgba(201,152,58,.3); }
+  .gem-listing-img {
+    height: 180px; display: flex; align-items: center; justify-content: center;
+    font-size: 3.5rem; position: relative;
+  }
+  .gem-listing-body { padding: 16px 16px 18px; }
+  .gem-listing-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; color: var(--ink); margin-bottom: 8px; }
+  .gem-listing-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+  .gem-listing-price { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--ink); font-weight: 700; }
+  .cert-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(13,107,80,.08); color: var(--emerald);
+    font-size: .72rem; font-weight: 600; letter-spacing: .05em;
+    padding: 4px 10px; border-radius: 50px; margin-top: 10px;
+  }
+
+  /* ══════════════════════════════════════════
+       PAGE 3 — CONTACT
+  ══════════════════════════════════════════ */
+  .contact-hero {
+    background: linear-gradient(135deg, #1A1632 0%, #2B2040 50%, #8B4513 100%);
+    padding: 80px 5vw 90px; text-align: center; position: relative; overflow: hidden;
+  }
+  .contact-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(201,152,58,.12) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(168,36,58,.08) 0%, transparent 60%);
+  }
+  .contact-hero-icon {
+    width: 70px; height: 70px; border-radius: 50%; margin: 0 auto 24px;
+    background: rgba(201,152,58,.15); border: 1px solid rgba(201,152,58,.3);
+    display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
+    position: relative; z-index: 1;
+  }
+  .contact-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem,5vw,3.6rem); color: #fff; margin-bottom: 14px; position: relative; z-index: 1; }
+  .contact-hero p { font-size: 1rem; color: rgba(255,255,255,.6); max-width: 500px; margin: 0 auto; position: relative; z-index: 1; }
+  .contact-divider { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 24px; position: relative; z-index: 1; }
+  .contact-divider::before, .contact-divider::after { content: ''; width: 60px; height: 1px; background: rgba(201,152,58,.4); }
+  .contact-divider span { color: var(--gold); font-size: .9rem; }
+
+  .contact-body { max-width: 1100px; margin: 0 auto; padding: 64px 5vw 100px; }
+  .contact-cards { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; margin-bottom: 72px; }
+  .contact-card {
+    background: #fff; border-radius: var(--r-md); padding: 28px 20px; text-align: center;
+    border: 1px solid rgba(201,152,58,.1); box-shadow: 0 2px 16px rgba(11,12,26,.05);
+    transition: all .3s;
+  }
+  .contact-card:hover { transform: translateY(-5px); box-shadow: 0 14px 36px rgba(11,12,26,.1); }
+  .contact-card-icon {
+    width: 56px; height: 56px; border-radius: 16px; margin: 0 auto 16px;
+    background: linear-gradient(135deg, var(--gold) 0%, #A8762B 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; box-shadow: 0 6px 20px rgba(201,152,58,.35);
+  }
+  .contact-card h3 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--ink); margin-bottom: 8px; }
+  .contact-card p { font-size: .85rem; color: var(--txt-lt); line-height: 1.6; margin-bottom: 14px; }
+  .contact-card a { color: var(--gold); font-weight: 600; font-size: .85rem; text-decoration: none; }
+
+  .map-section h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; text-align: center; margin-bottom: 8px; color: var(--ink); }
+  .map-section .sub { text-align: center; color: var(--txt-lt); margin-bottom: 28px; font-size: .9rem; }
+  .map-placeholder {
+    background: linear-gradient(160deg, #F0EBE0 0%, #E8E0D0 100%);
+    border-radius: var(--r-md); height: 340px;
+    border: 1px solid rgba(201,152,58,.2);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+    position: relative; overflow: hidden;
+  }
+  .map-placeholder::before {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(201,152,58,.06) 40px, rgba(201,152,58,.06) 41px),
+                repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(201,152,58,.06) 40px, rgba(201,152,58,.06) 41px);
+  }
+  .map-placeholder .map-icon { font-size: 2.8rem; position: relative; z-index: 1; }
+  .map-placeholder h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--ink); position: relative; z-index: 1; }
+  .map-placeholder p { font-size: .85rem; color: var(--txt-lt); text-align: center; position: relative; z-index: 1; max-width: 300px; }
+  .map-info {
+    margin-top: 16px; background: #fff; border-radius: 12px;
+    padding: 14px 20px; display: flex; align-items: center; gap: 14px;
+    border: 1px solid rgba(201,152,58,.15);
+    box-shadow: 0 2px 12px rgba(11,12,26,.06);
+  }
+  .map-info-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--gold) 0%, #A8762B 100%);
+    display: flex; align-items: center; justify-content: center; font-size: .9rem; flex-shrink: 0;
+  }
+  .map-info strong { font-size: .9rem; color: var(--ink); display: block; }
+  .map-info span { font-size: .8rem; color: var(--txt-lt); }
+
+  .why-visit { margin-top: 72px; }
+  .why-visit h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; text-align: center; margin-bottom: 8px; color: var(--ink); }
+  .why-visit .sub { text-align: center; color: var(--txt-lt); margin-bottom: 36px; font-size: .9rem; }
+  .why-visit-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
+  .why-visit-card {
+    background: #fff; border-radius: var(--r-md); padding: 28px 20px; text-align: center;
+    border: 1px solid rgba(201,152,58,.1); transition: all .3s;
+  }
+  .why-visit-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(11,12,26,.08); }
+  .why-visit-card .icon { font-size: 2rem; margin-bottom: 14px; }
+  .why-visit-card h3 { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--ink); margin-bottom: 8px; }
+  .why-visit-card p { font-size: .83rem; color: var(--txt-lt); line-height: 1.65; }
+
+  /* ══════════════════════════════════════════
+       PAGE 4 — DETAIL
+  ══════════════════════════════════════════ */
+  .detail-page { padding: 40px 5vw 100px; }
+  .detail-inner { max-width: 1100px; margin: 0 auto; }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: .88rem; color: var(--txt-lt); cursor: pointer;
+    text-decoration: none; margin-bottom: 36px; transition: color .2s;
+    background: none; border: none; font-family: 'Jost', sans-serif;
+  }
+  .back-btn:hover { color: var(--gold); }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+
+  /* Image gallery */
+  .detail-gallery { }
+  .detail-main-img {
+    background: linear-gradient(135deg, #F7F4EE 0%, #EDE8DF 100%);
+    border-radius: var(--r-lg); height: 440px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 7rem; margin-bottom: 16px;
+    border: 1px solid rgba(201,152,58,.12);
+    position: relative; overflow: hidden;
+  }
+  .detail-main-img::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 30%, rgba(201,152,58,.1) 0%, transparent 60%);
+  }
+  .detail-thumbnails { display: flex; gap: 10px; }
+  .det-thumb {
+    width: 72px; height: 72px; border-radius: 12px;
+    background: linear-gradient(135deg, #F0EBE0 0%, #E5DFD5 100%);
+    border: 2px solid transparent; cursor: pointer; transition: all .2s;
+    display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+  .det-thumb.active, .det-thumb:hover { border-color: var(--gold); }
+  .detail-dots { display: flex; gap: 8px; justify-content: center; margin-top: 16px; }
+  .detail-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(201,152,58,.25); cursor: pointer; transition: all .2s; }
+  .detail-dot.active { background: var(--gold); transform: scale(1.2); }
+
+  /* Detail info */
+  .detail-info { }
+  .det-sku {
+    display: inline-block; background: rgba(28,58,138,.1); color: var(--sapphire);
+    font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    padding: 5px 14px; border-radius: 50px; margin-bottom: 14px;
+  }
+  .det-title { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+  .det-cat { font-size: .88rem; color: var(--txt-lt); margin-bottom: 28px; }
+  .det-cat a { color: var(--gold); font-weight: 600; text-decoration: none; }
+  .det-specs-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+    background: rgba(201,152,58,.12); border-radius: var(--r-sm); overflow: hidden;
+    margin-bottom: 28px;
+  }
+  .det-spec {
+    background: #fff; padding: 18px 20px;
+  }
+  .det-spec .spec-label { font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--txt-lt); margin-bottom: 6px; }
+  .det-spec .spec-value { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 600; color: var(--ink); }
+  .det-price-box {
+    background: linear-gradient(135deg, #FFFBF0 0%, #FFF5DC 100%);
+    border: 1px solid rgba(201,152,58,.2); border-radius: var(--r-sm); padding: 22px 24px; margin-bottom: 24px;
+  }
+  .det-price { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--ink); }
+  .det-price-per { font-size: .85rem; color: var(--txt-lt); margin-top: 4px; }
+  .det-cert-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: linear-gradient(135deg, var(--gold) 0%, #A8762B 100%);
+    color: #fff; padding: 14px 28px; border-radius: var(--r-sm);
+    font-weight: 600; font-size: .9rem; letter-spacing: .04em;
+    border: none; cursor: pointer; width: 100%;
+    box-shadow: 0 8px 28px rgba(201,152,58,.4); margin-bottom: 18px;
+    justify-content: center; font-family: 'Jost', sans-serif;
+  }
+  .det-cert-details {
+    background: var(--cream); border-radius: var(--r-sm); padding: 18px 20px;
+    border: 1px solid rgba(201,152,58,.12);
+  }
+  .det-cert-details h4 { font-family: 'Playfair Display', serif; font-size: .95rem; color: var(--ink); margin-bottom: 10px; }
+  .det-cert-row { display: flex; justify-content: space-between; font-size: .86rem; padding: 6px 0; border-bottom: 1px solid rgba(201,152,58,.08); }
+  .det-cert-row:last-child { border-bottom: none; }
+  .det-cert-row span:first-child { color: var(--txt-lt); }
+  .det-cert-row span:last-child { color: var(--ink); font-weight: 500; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: linear-gradient(180deg, #0D0C1C 0%, #080810 100%);
+    padding: 64px 5vw 28px;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-brand .nav-logo { margin-bottom: 16px; color: #fff; }
+  .footer-brand p { font-size: .85rem; color: rgba(255,255,255,.4); line-height: 1.7; max-width: 280px; }
+  .footer-col h4 {
+    font-family: 'Playfair Display', serif; font-size: .95rem; color: var(--gold);
+    margin-bottom: 18px; letter-spacing: .04em;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a {
+    font-size: .85rem; color: rgba(255,255,255,.4); text-decoration: none;
+    transition: color .2s;
+  }
+  .footer-col a:hover { color: var(--gold-lt); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,.06); padding-top: 22px;
+    text-align: center; font-size: .78rem; color: rgba(255,255,255,.25);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .hero-content { grid-template-columns: 1fr; gap: 40px; padding: 60px 5vw; }
+    .hero-right { grid-template-columns: repeat(2,1fr); }
+    .why-grid, .testi-grid { grid-template-columns: repeat(2,1fr); }
+    .how-steps { grid-template-columns: repeat(2,1fr); gap: 32px; }
+    .how-steps::before { display: none; }
+    .featured-grid { grid-template-columns: repeat(2,1fr); }
+    .contact-cards { grid-template-columns: repeat(2,1fr); }
+    .why-visit-grid { grid-template-columns: repeat(2,1fr); }
+    .detail-grid { grid-template-columns: 1fr; gap: 32px; }
+    .catalog-body { flex-direction: column; }
+    .filter-panel { width: 100%; position: static; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 600px) {
+    .why-grid, .testi-grid, .how-steps, .featured-grid,
+    .contact-cards, .why-visit-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 20px; }
+    .nav-links { gap: 20px; }
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Shimmer animation for gem images */
+  .gem-shimmer {
+    position: relative; overflow: hidden;
+  }
+  .gem-shimmer::after {
+    content: ''; position: absolute;
+    top: -50%; left: -60%; width: 40%; height: 200%;
+    background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,.4) 50%, transparent 80%);
+    animation: shimmer 3s infinite;
+    pointer-events: none;
+  }
+  @keyframes shimmer {
+    0% { left: -60%; }
+    100% { left: 120%; }
+  }
+
+  /* Gem bg colors */
+  .bg-ruby { background: linear-gradient(135deg, #FFF0F2 0%, #FFE0E5 100%); }
+  .bg-sapphire { background: linear-gradient(135deg, #F0F4FF 0%, #E0E8FF 100%); }
+  .bg-emerald { background: linear-gradient(135deg, #F0FFF8 0%, #DCFFF0 100%); }
+  .bg-diamond { background: linear-gradient(135deg, #F8F8FF 0%, #EFEFFF 100%); }
+  .bg-amethyst { background: linear-gradient(135deg, #FBF0FF 0%, #F2E0FF 100%); }
+  .bg-topaz { background: linear-gradient(135deg, #FFFBF0 0%, #FFF5DC 100%); }
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav id="mainNav">
+  <a class="nav-logo" href="#" onclick="showPage('home')">
+    <div class="nav-logo-gem"></div>
+    Ratna<span>Veda</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+    <li><a href="#" onclick="showPage('catalog')" id="nav-catalog">Catalog</a></li>
+    <li><a href="#" onclick="showPage('contact')" id="nav-contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ════════════════════════════════════════
+     PAGE: HOME
+════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-particles" id="particles"></div>
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="hero-eyebrow">Certified Precious Gemstones</div>
+        <h1 class="hero-h1">Discovering<br><em>Precious</em><br><span class="hero-h1-sub">Gems of India</span></h1>
+        <p class="hero-desc">Explore our curated collection of authenticated, beautifully crafted gemstones. Each piece comes with professional certification, ready to become part of your story.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#" onclick="showPage('catalog')">✦ Browse Collection</a>
+          <a class="btn btn-outline" href="#" style="color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.25);" onclick="scrollToSection()">Learn More</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><div class="num">500+</div><div class="lbl">Gemstones</div></div>
+          <div class="hero-stat"><div class="num">100%</div><div class="lbl">Certified</div></div>
+          <div class="hero-stat"><div class="num">24/7</div><div class="lbl">Support</div></div>
+          <div class="hero-stat"><div class="num">12+</div><div class="lbl">Gem Types</div></div>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="gem-card" onclick="showPage('catalog')">
+          <div class="gem-icon" style="background:linear-gradient(135deg,rgba(232,200,122,.2),rgba(201,152,58,.1))">💎</div>
+          <div class="gem-name">Diamonds</div>
+          <div class="gem-tag">Heera</div>
+        </div>
+        <div class="gem-card" onclick="showPage('catalog')">
+          <div class="gem-icon" style="background:linear-gradient(135deg,rgba(168,36,58,.15),rgba(168,36,58,.05))">❤️</div>
+          <div class="gem-name">Rubies</div>
+          <div class="gem-tag">Manik</div>
+        </div>
+        <div class="gem-card" onclick="showPage('catalog')">
+          <div class="gem-icon" style="background:linear-gradient(135deg,rgba(28,58,138,.15),rgba(28,58,138,.05))">💙</div>
+          <div class="gem-name">Sapphires</div>
+          <div class="gem-tag">Neelam</div>
+        </div>
+        <div class="gem-card" onclick="showPage('catalog')">
+          <div class="gem-icon" style="background:linear-gradient(135deg,rgba(13,107,80,.15),rgba(13,107,80,.05))">💚</div>
+          <div class="gem-name">Emeralds</div>
+          <div class="gem-tag">Panna</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE -->
+  <section class="why-section" id="why">
+    <div class="why-inner">
+      <div class="why-header">
+        <div class="section-eyebrow">Why RatnaVeda</div>
+        <h2 class="section-title">Why Choose RatnaVeda</h2>
+        <p class="section-sub">Experience the finest in gemstone collection — authenticated, transparent, and trusted</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon">🏆</div>
+          <h3>Certified Authenticity</h3>
+          <p>Every gemstone comes with professional certification from recognized laboratories like GIA, IGI and more.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">📱</div>
+          <h3>QR Code Discovery</h3>
+          <p>Scan QR codes to instantly access detailed information about each gemstone's origin and quality.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">🔍</div>
+          <h3>Detailed Specifications</h3>
+          <p>Complete transparency with carat weight, clarity, cut, color grade, and origin information.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">👑</div>
+          <h3>Professional Service</h3>
+          <p>Expert guidance and support throughout your gemstone journey from selection to purchase.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED -->
+  <section class="featured-section">
+    <div class="featured-inner">
+      <div class="featured-header">
+        <div class="section-eyebrow">Handpicked Gems</div>
+        <h2 class="section-title">Featured Collection</h2>
+        <p class="section-sub">Carefully selected gems from our exclusive inventory</p>
+      </div>
+      <div class="view-all-wrap">
+        <a class="btn btn-outline" href="#" onclick="showPage('catalog')">View All Collection →</a>
+      </div>
+      <div class="featured-grid">
+        <div class="feat-card" onclick="showDetail('ruby')">
+          <div class="feat-img bg-ruby gem-shimmer">❤️‍🔥</div>
+          <div class="feat-body">
+            <div class="feat-tags">
+              <span class="tag tag-type">Manik</span>
+              <span class="tag tag-cert">GIA Certified</span>
+            </div>
+            <div class="feat-name">Burmese Star Ruby</div>
+            <div class="feat-specs">5.20 ct · Deep Red · VS Clarity</div>
+            <div class="feat-price">₹1,24,800 <span>per piece</span></div>
+          </div>
+        </div>
+        <div class="feat-card" onclick="showDetail('sapphire')">
+          <div class="feat-img bg-sapphire gem-shimmer">💙</div>
+          <div class="feat-body">
+            <div class="feat-tags">
+              <span class="tag tag-type">Neelam</span>
+              <span class="tag tag-cert">IGI Certified</span>
+            </div>
+            <div class="feat-name">Kashmir Blue Sapphire</div>
+            <div class="feat-specs">3.85 ct · Royal Blue · VVS1</div>
+            <div class="feat-price">₹2,31,000 <span>per piece</span></div>
+          </div>
+        </div>
+        <div class="feat-card" onclick="showDetail('emerald')">
+          <div class="feat-img bg-emerald gem-shimmer">💚</div>
+          <div class="feat-body">
+            <div class="feat-tags">
+              <span class="tag tag-type">Panna</span>
+              <span class="tag tag-cert">GIA Certified</span>
+            </div>
+            <div class="feat-name">Colombian Emerald</div>
+            <div class="feat-specs">4.10 ct · Vivid Green · F1</div>
+            <div class="feat-price">₹1,87,500 <span>per piece</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section">
+    <div class="how-inner">
+      <div class="how-header">
+        <div class="section-eyebrow">Simple Process</div>
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-sub">Four simple steps to find your perfect gemstone</p>
+      </div>
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="step-num">01<div class="step-icon">🔍</div></div>
+          <h3>Browse Collection</h3>
+          <p>Explore our extensive catalog of certified gemstones with detailed specifications and high-quality images.</p>
+        </div>
+        <div class="how-step">
+          <div class="step-num">02<div class="step-icon">📱</div></div>
+          <h3>Scan QR Code</h3>
+          <p>Use our QR code system to instantly access comprehensive information about any gemstone.</p>
+        </div>
+        <div class="how-step">
+          <div class="step-num">03<div class="step-icon">✅</div></div>
+          <h3>Verify Certification</h3>
+          <p>Review authentic certification documents from recognized laboratories for complete peace of mind.</p>
+        </div>
+        <div class="how-step">
+          <div class="step-num">04<div class="step-icon">💎</div></div>
+          <h3>Make Your Choice</h3>
+          <p>Connect with our experts to finalize your selection and complete your purchase with confidence.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testi-section">
+    <div class="testi-inner">
+      <div class="testi-header">
+        <div class="section-eyebrow">Customer Stories</div>
+        <h2 class="section-title">What Our Customers Say</h2>
+        <p class="section-sub">Trusted by gemstone enthusiasts across India and worldwide</p>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p class="testi-quote">"The QR code feature is brilliant! I could instantly verify all the details of my gemstone purchase. Truly innovative and trustworthy."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">P</div>
+            <div><div class="testi-name">Priya Sharma</div><div class="testi-role">Verified Customer</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p class="testi-quote">"Exceptional quality and transparency. Every gemstone comes with proper certification, and the detailed specifications help me make informed decisions."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">R</div>
+            <div><div class="testi-name">Rajesh Kumar</div><div class="testi-role">Gemstone Collector</div></div>
+          </div>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★☆</div>
+          <p class="testi-quote">"Professional service and authentic gemstones. The team guided me through the entire process. I'm extremely satisfied with my purchase."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">A</div>
+            <div><div class="testi-name">Anita Patel</div><div class="testi-role">Jewelry Designer</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-inner">
+      <div class="section-eyebrow">Get Started Today</div>
+      <h2 class="section-title">Ready to Explore Our Collection?</h2>
+      <p class="section-sub">Discover authentic, certified gemstones with complete transparency and professional service. Your perfect gem awaits.</p>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="#" onclick="showPage('catalog')">✦ Browse Catalog</a>
+        <a class="btn btn-outline" href="#" onclick="showPage('contact')">Contact Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="nav-logo" href="#" onclick="showPage('home')">
+            <div class="nav-logo-gem"></div>
+            Ratna<span>Veda</span>
+          </a>
+          <p>Next-Gen Gemstone Inventory & QR Discovery System. Bringing authenticity and transparency to the world of precious gems.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#" onclick="showPage('catalog')">Browse Catalog</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms & Conditions</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="#">Visit our store to see gemstones in person</a></li>
+            <li><a href="#" onclick="showPage('contact')">Contact Us</a></li>
+            <li><a href="mailto:info@ratnaveda.com">info@ratnaveda.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">© 2024 RatnaVeda. All rights reserved. Crafted with ✦ for gem lovers.</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: CATALOG
+════════════════════════════════════════ -->
+<div class="page" id="page-catalog">
+  <div class="catalog-hero">
+    <div class="section-eyebrow">Our Inventory</div>
+    <h1>💎 Gemstone Collection</h1>
+    <p>Discover our exquisite collection of certified gemstones with complete transparency and authenticity</p>
+  </div>
+
+  <div class="catalog-body">
+    <!-- FILTERS -->
+    <aside class="filter-panel">
+      <div class="filter-header">
+        <h3>⚗️ Filters</h3>
+        <button class="clear-btn" onclick="clearFilters()">Clear All</button>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Search Gemstones</label>
+        <input class="filter-input" type="text" placeholder="Search by name, type, or origin…" id="searchFilter" oninput="filterGems()">
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Ratna Type</label>
+        <select class="filter-input" id="typeFilter" onchange="filterGems()">
+          <option value="">All Types</option>
+          <option value="Manik">Manik (Ruby)</option>
+          <option value="Neelam">Neelam (Sapphire)</option>
+          <option value="Panna">Panna (Emerald)</option>
+          <option value="Heera">Heera (Diamond)</option>
+          <option value="Pukhraj">Pukhraj (Yellow Sapphire)</option>
+          <option value="Moti">Moti (Pearl)</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Category</label>
+        <select class="filter-input" id="catFilter" onchange="filterGems()">
+          <option value="">All Categories</option>
+          <option value="Precious">Precious Gems</option>
+          <option value="Semi-Precious">Semi-Precious</option>
+          <option value="Other">Other Gemstones</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Min Carat</label>
+        <input class="filter-input" type="number" placeholder="0" id="caratFilter" min="0" step="0.5" oninput="filterGems()">
+      </div>
+    </aside>
+
+    <!-- GEMS GRID -->
+    <div class="gems-area">
+      <div class="gems-toolbar">
+        <p class="gems-count">Showing <strong id="gemCount">0</strong> gemstones</p>
+      </div>
+      <div class="gems-grid" id="gemsGrid"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="nav-logo" href="#" onclick="showPage('home')"><div class="nav-logo-gem"></div>Ratna<span>Veda</span></a>
+          <p>Next-Gen Gemstone Inventory & QR Discovery System.</p>
+        </div>
+        <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#" onclick="showPage('catalog')">Browse Catalog</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms & Conditions</a></li></ul></div>
+        <div class="footer-col"><h4>Contact</h4><ul><li><a href="#">Visit our store in person</a></li><li><a href="#" onclick="showPage('contact')">Contact Us</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">© 2024 RatnaVeda. All rights reserved.</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: CONTACT
+════════════════════════════════════════ -->
+<div class="page" id="page-contact">
+  <div class="contact-hero">
+    <div class="contact-hero-icon">💎</div>
+    <h1>Get In Touch</h1>
+    <p>Experience the luxury of authentic gemstones. Visit our store or connect with us through any channel below.</p>
+    <div class="contact-divider"><span>✦</span></div>
+  </div>
+
+  <div class="contact-body">
+    <div class="contact-cards">
+      <div class="contact-card">
+        <div class="contact-card-icon">🏪</div>
+        <h3>Visit Our Store</h3>
+        <p>Come see our gemstone collection in person and experience the quality firsthand.</p>
+        <a href="#">View on Map →</a>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">📞</div>
+        <h3>Call Us</h3>
+        <p>Speak directly with our gemstone experts for personalized guidance.</p>
+        <a href="tel:+919876543210">+91 98765 43210</a>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">✉️</div>
+        <h3>Email Us</h3>
+        <p>Send us your queries and we'll respond within 24 hours.</p>
+        <a href="mailto:info@ratnaveda.com">info@ratnaveda.com</a>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">🕐</div>
+        <h3>Business Hours</h3>
+        <p>Monday – Saturday<br><strong>10:00 AM – 7:00 PM</strong><br>Sunday: Closed</p>
+      </div>
+    </div>
+
+    <!-- MAP -->
+    <div class="map-section">
+      <h2>Find Us</h2>
+      <p class="sub">Visit our store location for an in-person experience</p>
+      <div class="map-placeholder">
+        <div class="map-icon">🗺️</div>
+        <h3>Map Unavailable</h3>
+        <p>Please contact us for directions to our store. Configure Google Maps API key in admin settings to enable.</p>
+      </div>
+      <div class="map-info">
+        <div class="map-info-icon">📍</div>
+        <div><strong>RatnaVeda</strong><span>Address not available — contact us for directions</span></div>
+      </div>
+    </div>
+
+    <!-- WHY VISIT -->
+    <div class="why-visit">
+      <h2>Why Visit Us?</h2>
+      <p class="sub">Experience the difference of authentic luxury</p>
+      <div class="why-visit-grid">
+        <div class="why-visit-card">
+          <div class="icon">💎</div>
+          <h3>Authentic Gemstones</h3>
+          <p>View our certified collection in person and feel the quality that sets us apart.</p>
+        </div>
+        <div class="why-visit-card">
+          <div class="icon">👨‍💼</div>
+          <h3>Expert Consultation</h3>
+          <p>Get professional guidance from our gemstone experts during your visit.</p>
+        </div>
+        <div class="why-visit-card">
+          <div class="icon">📜</div>
+          <h3>Certification</h3>
+          <p>All gemstones come with proper certification and complete documentation.</p>
+        </div>
+        <div class="why-visit-card">
+          <div class="icon">🛡️</div>
+          <h3>Trusted Quality</h3>
+          <p>Years of expertise in authentic gemstone trading and customer satisfaction.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand"><a class="nav-logo" href="#" onclick="showPage('home')"><div class="nav-logo-gem"></div>Ratna<span>Veda</span></a><p>Next-Gen Gemstone Inventory & QR Discovery System.</p></div>
+        <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#" onclick="showPage('catalog')">Browse Catalog</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms & Conditions</a></li></ul></div>
+        <div class="footer-col"><h4>Contact</h4><ul><li><a href="#">Visit our store in person</a></li><li><a href="#" onclick="showPage('contact')">Contact Us</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">© 2024 RatnaVeda. All rights reserved.</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE: DETAIL
+════════════════════════════════════════ -->
+<div class="page" id="page-detail">
+  <div class="detail-page">
+    <div class="detail-inner">
+      <button class="back-btn" onclick="showPage('catalog')">← Back to Catalog</button>
+      <div class="detail-grid">
+        <div class="detail-gallery">
+          <div class="detail-main-img gem-shimmer" id="detailMainImg">❤️‍🔥</div>
+          <div class="detail-thumbnails" id="detailThumbs"></div>
+          <div class="detail-dots" id="detailDots"></div>
+        </div>
+        <div class="detail-info">
+          <div class="det-sku" id="detSKU">SKU: 0000000</div>
+          <h1 class="det-title" id="detTitle">Gemstone Name</h1>
+          <p class="det-cat">Category: <a href="#" id="detCat">Category</a></p>
+          <div class="det-specs-grid">
+            <div class="det-spec"><div class="spec-label">Ratna Type</div><div class="spec-value" id="detType">—</div></div>
+            <div class="det-spec"><div class="spec-label">Carat Weight</div><div class="spec-value" id="detCarat">—</div></div>
+            <div class="det-spec"><div class="spec-label">Color Grade</div><div class="spec-value" id="detColor">—</div></div>
+            <div class="det-spec"><div class="spec-label">Clarity</div><div class="spec-value" id="detClarity">—</div></div>
+          </div>
+          <div class="det-price-box">
+            <div class="det-price" id="detPrice">₹0</div>
+            <div class="det-price-per" id="detPricePer">₹0 per carat</div>
+          </div>
+          <button class="det-cert-btn" id="detCertBtn">✦ GIA Certified</button>
+          <div class="det-cert-details">
+            <h4>Certification Details</h4>
+            <div class="det-cert-row"><span>Type</span><span id="certType">GIA</span></div>
+            <div class="det-cert-row"><span>Certificate No.</span><span id="certNo">—</span></div>
+            <div class="det-cert-row"><span>Issued By</span><span id="certBy">—</span></div>
+            <div class="det-cert-row"><span>Origin</span><span id="certOrigin">—</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand"><a class="nav-logo" href="#" onclick="showPage('home')"><div class="nav-logo-gem"></div>Ratna<span>Veda</span></a><p>Next-Gen Gemstone Inventory & QR Discovery System.</p></div>
+        <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#" onclick="showPage('catalog')">Browse Catalog</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms & Conditions</a></li></ul></div>
+        <div class="footer-col"><h4>Contact</h4><ul><li><a href="#">Visit our store in person</a></li><li><a href="#" onclick="showPage('contact')">Contact Us</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">© 2024 RatnaVeda. All rights reserved.</div>
+    </div>
+  </footer>
+</div>
+
+<script>
+// ─── DATA ───
+const GEMS = [
+  { id:'ruby',      name:'Burmese Star Ruby',    type:'Manik',   cat:'Precious',      carat:5.20, color:'Deep Red',     clarity:'VS1',   price:124800, emoji:'❤️‍🔥', bg:'bg-ruby',     cert:'GIA',  certNo:'GIA-2024-001', certBy:'GIA Laboratories',  origin:'Burma (Myanmar)',       sku:'2340001' },
+  { id:'sapphire',  name:'Kashmir Blue Sapphire',type:'Neelam',  cat:'Precious',      carat:3.85, color:'Royal Blue',   clarity:'VVS1',  price:231000, emoji:'💙',   bg:'bg-sapphire', cert:'IGI',  certNo:'IGI-2024-045', certBy:'IGI India',          origin:'Kashmir, India',        sku:'2340002' },
+  { id:'emerald',   name:'Colombian Emerald',    type:'Panna',   cat:'Precious',      carat:4.10, color:'Vivid Green',  clarity:'F1',    price:187500, emoji:'💚',   bg:'bg-emerald',  cert:'GIA',  certNo:'GIA-2024-078', certBy:'GIA Laboratories',  origin:'Colombia',              sku:'2340003' },
+  { id:'diamond',   name:'White Diamond',        type:'Heera',   cat:'Precious',      carat:2.50, color:'Colourless',   clarity:'IF',    price:340000, emoji:'💎',   bg:'bg-diamond',  cert:'GIA',  certNo:'GIA-2024-112', certBy:'GIA Laboratories',  origin:'South Africa',          sku:'2340004' },
+  { id:'yellow',    name:'Ceylon Yellow Sapphire',type:'Pukhraj', cat:'Precious',     carat:6.00, color:'Canary Yellow', clarity:'VS2',  price:96000,  emoji:'💛',   bg:'bg-topaz',    cert:'GII',  certNo:'GII-2024-034', certBy:'GII Laboratories',  origin:'Sri Lanka',             sku:'2340005' },
+  { id:'pearl',     name:'South Sea Pearl',      type:'Moti',    cat:'Semi-Precious', carat:8.50, color:'White Luster', clarity:'AAA',   price:45000,  emoji:'🤍',   bg:'bg-diamond',  cert:'IGI',  certNo:'IGI-2024-089', certBy:'IGI India',          origin:'Persian Gulf',          sku:'2340006' },
+  { id:'amethyst',  name:'Brazilian Amethyst',   type:'Katela',  cat:'Semi-Precious', carat:7.25, color:'Deep Purple',  clarity:'VVS2',  price:28500,  emoji:'💜',   bg:'bg-amethyst', cert:'IGI',  certNo:'IGI-2024-101', certBy:'IGI India',          origin:'Brazil',                sku:'2340007' },
+  { id:'coral',     name:'Italian Red Coral',    type:'Moonga',  cat:'Other',         carat:9.10, color:'Ox-Blood Red', clarity:'A+',    price:52000,  emoji:'🪸',   bg:'bg-ruby',     cert:'GII',  certNo:'GII-2024-055', certBy:'GII Laboratories',  origin:'Mediterranean Sea',     sku:'2340008' },
+  { id:'hessonite', name:'Hessonite Garnet',     type:'Gomed',   cat:'Semi-Precious', carat:5.80, color:'Honey Brown',  clarity:'SI1',   price:34000,  emoji:'🟤',   bg:'bg-topaz',    cert:'GIA',  certNo:'GIA-2024-133', certBy:'GIA Laboratories',  origin:'Sri Lanka',             sku:'2340009' },
+];
+
+let filtered = [...GEMS];
+
+// ─── PARTICLES ───
+function initParticles() {
+  const container = document.getElementById('particles');
+  if (!container) return;
+  container.innerHTML = '';
+  for (let i = 0; i < 22; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 6 + 2;
+    p.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}%; top:${Math.random()*100}%;
+      --d:${Math.random()*4+4}s; --delay:${Math.random()*4}s;
+      --ty:${-(Math.random()*40+20)}px; --op:${Math.random()*.4+.1};
+    `;
+    container.appendChild(p);
+  }
+}
+
+// ─── NAV ───
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const navEl = document.getElementById('nav-' + id);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (id === 'home') initParticles();
+  if (id === 'catalog') renderGems();
+  return false;
+}
+
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 10);
+});
+
+function scrollToSection() {
+  document.getElementById('why')?.scrollIntoView({ behavior: 'smooth' });
+  return false;
+}
+
+// ─── GEMS ───
+function renderGems() {
+  const grid = document.getElementById('gemsGrid');
+  const count = document.getElementById('gemCount');
+  count.textContent = filtered.length;
+  grid.innerHTML = filtered.map(g => `
+    <div class="gem-listing-card" onclick="showDetail('${g.id}')">
+      <div class="gem-listing-img ${g.bg} gem-shimmer">${g.emoji}</div>
+      <div class="gem-listing-body">
+        <div class="gem-listing-name">${g.name}</div>
+        <div class="gem-listing-tags">
+          <span class="tag tag-type">${g.type}</span>
+          <span class="tag" style="background:rgba(11,12,26,.06);color:var(--txt-lt)">${g.carat} ct</span>
+          <span class="tag" style="background:rgba(11,12,26,.06);color:var(--txt-lt)">${g.clarity}</span>
+        </div>
+        <div class="gem-listing-price">₹${g.price.toLocaleString('en-IN')}</div>
+        <div class="cert-badge">✓ ${g.cert} Certified</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterGems() {
+  const search = document.getElementById('searchFilter').value.toLowerCase();
+  const type = document.getElementById('typeFilter').value;
+  const cat = document.getElementById('catFilter').value;
+  const minCarat = parseFloat(document.getElementById('caratFilter').value) || 0;
+  filtered = GEMS.filter(g =>
+    (g.name.toLowerCase().includes(search) || g.type.toLowerCase().includes(search)) &&
+    (type === '' || g.type === type) &&
+    (cat === '' || g.cat === cat) &&
+    g.carat >= minCarat
+  );
+  renderGems();
+}
+
+function clearFilters() {
+  document.getElementById('searchFilter').value = '';
+  document.getElementById('typeFilter').value = '';
+  document.getElementById('catFilter').value = '';
+  document.getElementById('caratFilter').value = '';
+  filtered = [...GEMS];
+  renderGems();
+}
+
+// ─── DETAIL ───
+function showDetail(id) {
+  const g = GEMS.find(x => x.id === id);
+  if (!g) return;
+  document.getElementById('detSKU').textContent = 'SKU: ' + g.sku;
+  document.getElementById('detTitle').textContent = g.name;
+  document.getElementById('detCat').textContent = g.cat + ' Gemstones';
+  document.getElementById('detType').textContent = g.type;
+  document.getElementById('detCarat').textContent = g.carat + ' ct';
+  document.getElementById('detColor').textContent = g.color;
+  document.getElementById('detClarity').textContent = g.clarity;
+  document.getElementById('detPrice').textContent = '₹' + g.price.toLocaleString('en-IN');
+  document.getElementById('detPricePer').textContent = '₹' + Math.round(g.price / g.carat).toLocaleString('en-IN') + ' per carat';
+  document.getElementById('detCertBtn').textContent = '✦ ' + g.cert + ' Certified';
+  document.getElementById('certType').textContent = g.cert;
+  document.getElementById('certNo').textContent = g.certNo;
+  document.getElementById('certBy').textContent = g.certBy;
+  document.getElementById('certOrigin').textContent = g.origin;
+  // Main image
+  const mainImg = document.getElementById('detailMainImg');
+  mainImg.style.fontSize = '7rem';
+  mainImg.textContent = g.emoji;
+  // Thumbs
+  const thumbData = [g.emoji, '📋', '🔬', '📄', '🖼️'];
+  document.getElementById('detailThumbs').innerHTML = thumbData.map((e,i) => `
+    <div class="det-thumb ${i===0?'active':''}" style="${i===0?'font-size:1.6rem;':''}">${e}</div>
+  `).join('');
+  // Dots
+  document.getElementById('detailDots').innerHTML = thumbData.map((_,i) => `
+    <div class="detail-dot ${i===0?'active':''}"></div>
+  `).join('');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('nav-catalog').classList.add('active');
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-detail').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── INIT ───
+initParticles();
+renderGems();
+</script>
+</body>
+</html>
